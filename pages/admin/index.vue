@@ -5,7 +5,9 @@
       <section class="hero is-info welcome is-small has-margin-bottom-sm">
         <div class="hero-body">
           <div class="container">
-            <h1 class="title is-1">Hello, {{ username }}.</h1>
+            <h1 class="title is-1">
+              Hello, {{ username }}.
+            </h1>
             <h2 class="subtitle">
               I hope you are having a great day!
             </h2>
@@ -96,16 +98,16 @@ class Dashboard extends Vue {
   albumMediasCount = 0
   username: string | null = null
 
-  created(): void {
+  created (): void {
     this.fetchDashboard()
   }
 
-  fetchDashboard(): void {
+  fetchDashboard (): void {
     this.loading = true
 
     this.$axios
       .get('/api/admin/dashboard')
-      .then((res) => res.data)
+      .then(res => res.data)
       .then((res) => {
         this.username = res.user
         this.cosplayersCount = res.cosplayersCount

@@ -7,7 +7,7 @@
     >
       <div class="navbar-brand">
         <a class="navbar-item" href="/">
-          <img src="~assets/buefy.png" alt="Buefy" height="28" />
+          <img src="~assets/buefy.png" alt="Buefy" height="28">
         </a>
 
         <div class="navbar-burger">
@@ -35,7 +35,7 @@ export default {
   components: {
     Sidebar
   },
-  data() {
+  data () {
     return {
       items: [
         {

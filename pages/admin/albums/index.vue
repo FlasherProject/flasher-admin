@@ -130,7 +130,7 @@ import { showError, showSuccess } from '~/helpers/toast'
     /**
      * Filter to truncate string, accepts a length parameter
      */
-    truncate(value: string, length: number): string {
+    truncate (value: string, length: number): string {
       return value.length > length ? value.substr(0, length) + '...' : value
     }
   }
@@ -148,11 +148,11 @@ class AlbumsIndex extends Vue {
   defaultSortOrder = 'desc'
   search = ''
 
-  created(): void {
+  created (): void {
     this.fetchAlbums()
   }
 
-  fetchAlbums(): void {
+  fetchAlbums (): void {
     this.loading = true
     const sortOrder = this.sortOrder === 'asc' ? '' : '-'
 
@@ -164,7 +164,7 @@ class AlbumsIndex extends Vue {
           'filter[title]': this.search
         }
       })
-      .then((res) => res.data)
+      .then(res => res.data)
       .then((res) => {
         this.perPage = res.meta.per_page
         this.total = res.meta.total
@@ -187,7 +187,7 @@ class AlbumsIndex extends Vue {
   /*
    * Handle page-change event
    */
-  onPageChange(page: number): void {
+  onPageChange (page: number): void {
     this.page = page
     this.fetchAlbums()
   }
@@ -195,13 +195,13 @@ class AlbumsIndex extends Vue {
   /*
    * Handle sort event
    */
-  onSort(field: string, order: string): void {
+  onSort (field: string, order: string): void {
     this.sortField = field
     this.sortOrder = order
     this.fetchAlbums()
   }
 
-  confirmDeleteSelectedAlbums(): void {
+  confirmDeleteSelectedAlbums (): void {
     this.$buefy.dialog.confirm({
       title: 'Deleting Albums',
       message:
@@ -218,15 +218,15 @@ class AlbumsIndex extends Vue {
   /**
    * Delete album from slug
    */
-  async deleteSelectedAlbums(): Promise<void> {
+  async deleteSelectedAlbums (): Promise<void> {
     const deleteAlbum = async (album: Album): Promise<void> => {
       try {
         await this.$axios.delete(`/api/admin/albums/${album.slug}`)
         this.checkedRows = this.checkedRows.filter(
-          (selectedAlbum) => selectedAlbum.id !== album.id
+          selectedAlbum => selectedAlbum.id !== album.id
         )
         this.albums = this.albums.filter(
-          (albumItem) => albumItem.id !== album.id
+          albumItem => albumItem.id !== album.id
         )
         showSuccess(this.$buefy, 'Albums deleted')
       } catch (exception) {
@@ -238,7 +238,7 @@ class AlbumsIndex extends Vue {
       }
     }
 
-    await this.checkedRows.forEach((album) => deleteAlbum(album))
+    await this.checkedRows.forEach(album => deleteAlbum(album))
     // Do not refresh since this process is run in async mode in backend.
     // await this.fetchAlbums();
   }
