@@ -191,7 +191,6 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 import { quillEditor } from 'vue-quill-editor'
 import { DropzoneOptions } from 'dropzone'
 import draggable from 'vuedraggable'
-import ShareAlbum from '../../../components/admin/ShareAlbum.vue'
 import { Component, Prop, Vue } from '~/node_modules/vue-property-decorator'
 import Album from '~/models/album'
 import Category from '~/models/category'
@@ -199,6 +198,7 @@ import Cosplayer from '~/models/cosplayer'
 import { showError, showSuccess } from '~/helpers/toast'
 import FilterableById from '~/models/interfaces/filterableById'
 import { debounce } from '~/helpers/debounce'
+import ShareAlbum from '~/components/ShareAlbum.vue'
 
 interface AlbumErrorsInterface {
   title?: object
@@ -346,9 +346,12 @@ class AlbumsForm extends Vue {
       const { data } = res.data
       this.album = data
       this.errors = {}
+      if (!this.album?.slug) {
+        throw new Error('Unable to refresh undefined album.')
+      }
       showSuccess(this.$buefy, 'Album successfully created')
       await this.$router.push({
-        name: 'admin.albums.edit',
+        name: 'admin-albums-edit',
         params: { slug: this.album.slug }
       })
     } catch (exception) {
@@ -362,8 +365,8 @@ class AlbumsForm extends Vue {
   }
 
   async refreshMedias (): Promise<void> {
-    if (this.album === undefined) {
-      throw new DOMException('Unable to refresh undefined album.')
+    if (!this.album) {
+      throw new Error('Unable to refresh undefined album.')
     }
     const data = await this.$axios
       .get(`/api/admin/albums/${this.$route.params.slug}`)
@@ -391,8 +394,8 @@ class AlbumsForm extends Vue {
   }
 
   async deleteAlbum (): Promise<void> {
-    if (this.album === undefined) {
-      throw new DOMException('Unable to delete undefined album.')
+    if (!this.album) {
+      throw new Error('Unable to delete undefined album.')
     }
 
     this.loading = true
@@ -410,14 +413,13 @@ class AlbumsForm extends Vue {
   }
 
   async deleteAlbumPicture (mediaId: number): Promise<void> {
-    if (this.album === undefined) {
+    if (!this.album) {
       throw new Error('Unable to delete media from undefined album.')
     }
 
     try {
       await this.$axios.delete(`/api/admin/album-pictures/${this.album.slug}`, {
         data: {
-          // eslint-disable-next-line @typescript-eslint/camelcase
           media_id: mediaId
         }
       })
@@ -433,7 +435,7 @@ class AlbumsForm extends Vue {
 
   async updateMediasOrder (): Promise<void> {
     try {
-      if (this.album === undefined) {
+      if (!this.album) {
         throw new Error('Unable to update medias from undefined album.')
       }
       const data = { media_ids: this.album.medias.map(m => m.id) }

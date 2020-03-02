@@ -1,7 +1,7 @@
 import { SnackbarConfig } from 'buefy/types/components'
 import { BuefyNamespace } from 'buefy/types'
 
-export function showSuccess(buefy: BuefyNamespace, message: string): void {
+export function showSuccess (buefy: BuefyNamespace, message: string): void {
   const snackBarConfig: SnackbarConfig = {
     message,
     type: 'is-success',
@@ -11,7 +11,7 @@ export function showSuccess(buefy: BuefyNamespace, message: string): void {
   buefy.snackbar.open(snackBarConfig)
 }
 
-export function showError(
+export function showError (
   buefy: BuefyNamespace,
   message: string,
   onActionCallback?: () => void
