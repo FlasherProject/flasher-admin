@@ -19,7 +19,7 @@
     </nav>
 
     <section class="main-content columns">
-      <Sidebar></Sidebar>
+      <sidebar />
 
       <div class="container column is-10">
         <nuxt />

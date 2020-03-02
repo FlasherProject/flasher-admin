@@ -3,65 +3,65 @@
     <b-menu>
       <b-menu-list label="Administration">
         <b-menu-item
-          :to="{ name: 'admin.dashboard' }"
+          :to="{ name: 'admin' }"
           label="Dashboard"
           icon="home"
-          tag="router-link"
+          tag="nuxt-link"
           exact
         />
         <b-menu-item
-          :to="{ name: 'admin.albums.index' }"
+          :to="{ name: 'admin-albums' }"
           label="Albums"
           icon="images"
-          tag="router-link"
+          tag="nuxt-link"
         />
         <b-menu-item
-          :to="{ name: 'admin.categories.index' }"
+          :to="{ name: 'admin-categories' }"
           label="Categories"
           icon="tags"
-          tag="router-link"
+          tag="nuxt-link"
         />
         <b-menu-item
-          :to="{ name: 'admin.cosplayers.index' }"
+          :to="{ name: 'admin-cosplayers' }"
           label="Cosplayers"
           icon="user-tag"
-          tag="router-link"
+          tag="nuxt-link"
         />
         <b-menu-item
-          :to="{ name: 'admin.contacts.index' }"
+          :to="{ name: 'admin-contacts' }"
           label="Contacts"
           icon="pen-fancy"
-          tag="router-link"
+          tag="nuxt-link"
         />
         <b-menu-item
-          :to="{ name: 'admin.users.index' }"
+          :to="{ name: 'admin-users' }"
           label="Users"
           icon="user"
-          tag="router-link"
+          tag="nuxt-link"
         />
         <b-menu-item
-          :to="{ name: 'admin.testimonials.index' }"
+          :to="{ name: 'admin-testimonials' }"
           label="Testimonials"
           icon="book"
-          tag="router-link"
+          tag="nuxt-link"
         />
         <b-menu-item
-          :to="{ name: 'admin.social-medias.index' }"
+          :to="{ name: 'admin-social-medias' }"
           label="Social medias"
           icon="external-link-alt"
-          tag="router-link"
+          tag="nuxt-link"
         />
         <b-menu-item
-          :to="{ name: 'admin.invitations.index' }"
+          :to="{ name: 'admin-invitations' }"
           label="Invitations"
           icon="envelope-open-text"
-          tag="router-link"
+          tag="nuxt-link"
         />
         <b-menu-item
-          :to="{ name: 'admin.settings.index' }"
+          :to="{ name: 'admin-settings' }"
           label="Settings"
           icon="cog"
-          tag="router-link"
+          tag="nuxt-link"
         />
       </b-menu-list>
 
