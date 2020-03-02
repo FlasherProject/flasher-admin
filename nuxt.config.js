@@ -47,7 +47,8 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    '@nuxtjs/auth'
   ],
   buefy: {
     defaultIconComponent: 'vue-fontawesome',
@@ -57,7 +58,22 @@ export default {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
+  axios: {
+    baseURL: 'http://localhost:8000',
+    debug: true
+  },
+  router: {
+    middleware: ['auth']
+  },
+  auth: {
+    strategies: {
+      'laravel.passport': {
+        url: 'http://localhost:8000/oauth/token',
+        client_id: '4',
+        client_secret: 'DUpE4yx5EYhqJs10Rneask9cPXsxp5IQw8xKRynZ'
+      }
+    }
+  },
   /*
    ** Build configuration
    */
