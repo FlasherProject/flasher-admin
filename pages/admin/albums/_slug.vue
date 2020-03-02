@@ -1,11 +1,16 @@
 <template>
   <section class="section">
-    EDIT
+    <albums-form :is-creating="false" />
   </section>
 </template>
 
 <script>
+import AlbumsForm from '../../../components/AlbumsForm'
+
 export default {
-  name: 'AlbumEdit'
+  name: 'AlbumEdit',
+  components: {
+    AlbumsForm
+  }
 }
 </script>
