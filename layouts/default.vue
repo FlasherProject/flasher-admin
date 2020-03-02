@@ -19,18 +19,7 @@
     </nav>
 
     <section class="main-content columns">
-      <aside class="column is-2 section">
-        <p class="menu-label is-hidden-touch">
-          General
-        </p>
-        <ul class="menu-list">
-          <li v-for="(item, key) of items" :key="key">
-            <nuxt-link :to="item.to" exact-active-class="is-active">
-              <b-icon :icon="item.icon" /> {{ item.title }}
-            </nuxt-link>
-          </li>
-        </ul>
-      </aside>
+      <Sidebar></Sidebar>
 
       <div class="container column is-10">
         <nuxt />
@@ -40,7 +29,12 @@
 </template>
 
 <script>
+import Sidebar from '~/components/Sidebar'
+
 export default {
+  components: {
+    Sidebar
+  },
   data() {
     return {
       items: [
