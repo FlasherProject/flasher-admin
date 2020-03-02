@@ -1,3 +1,3 @@
 export default class Media {
-    id: number;
+  id!: number
 }
