@@ -69,7 +69,10 @@ export default {
   },
   typescript: {
     typeCheck: {
-      eslint: true
+      /*
+       ** Runtime lint
+       */
+      eslint: false
     }
   }
 }
