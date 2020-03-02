@@ -32,9 +32,10 @@ export default {
    ** Nuxt.js dev-modules
    */
   buildModules: [
-    '@nuxt/typescript-build',
     // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module'
+    '@nuxtjs/eslint-module',
+    // Doc : https://typescript.nuxtjs.org/guide/setup.html
+    '@nuxt/typescript-build'
   ],
   /*
    ** Nuxt.js modules
@@ -48,6 +49,10 @@ export default {
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv'
   ],
+  buefy: {
+    defaultIconComponent: 'vue-fontawesome',
+    defaultIconPack: 'fas'
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
@@ -61,5 +66,10 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {}
+  },
+  typescript: {
+    typeCheck: {
+      eslint: true
+    }
   }
 }

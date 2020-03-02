@@ -1,0 +1,158 @@
+<template>
+  <div>
+    <b-loading :is-full-page="false" :active="loading" />
+    <div v-if="!loading">
+      <section class="hero is-info welcome is-small has-margin-bottom-sm">
+        <div class="hero-body">
+          <div class="container">
+            <h1 class="title is-1">Hello, {{ username }}.</h1>
+            <h2 class="subtitle">
+              I hope you are having a great day!
+            </h2>
+          </div>
+        </div>
+      </section>
+      <section class="info-tiles">
+        <div class="tile is-ancestor has-text-centered">
+          <router-link
+            :to="{ name: 'admin.users.index' }"
+            class="tile is-parent"
+          >
+            <article class="tile is-child box">
+              <p class="title">
+                {{ usersCount }}
+              </p>
+              <p class="subtitle">
+                Users
+              </p>
+            </article>
+          </router-link>
+
+          <router-link
+            :to="{ name: 'admin.albums.index' }"
+            class="tile is-parent"
+          >
+            <article class="tile is-child box">
+              <p class="title">
+                {{ albumsCount }}
+              </p>
+              <p class="subtitle">
+                Albums
+              </p>
+            </article>
+          </router-link>
+
+          <router-link
+            :to="{ name: 'admin.albums.index' }"
+            class="tile is-parent"
+          >
+            <article class="tile is-child box">
+              <p class="title">
+                {{ albumMediasCount }}
+              </p>
+              <p class="subtitle">
+                Medias
+              </p>
+            </article>
+          </router-link>
+
+          <router-link
+            :to="{ name: 'admin.cosplayers.index' }"
+            class="tile is-parent"
+          >
+            <article class="tile is-child box">
+              <p class="title">
+                {{ cosplayersCount }}
+              </p>
+              <p class="subtitle">
+                Cosplayers
+              </p>
+            </article>
+          </router-link>
+
+          <a class="tile is-parent">
+            <article class="tile is-child box">
+              <p class="title">{{ contactsCount }}</p>
+              <p class="subtitle">Contacts</p>
+            </article>
+          </a>
+        </div>
+      </section>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import { SnackbarConfig } from 'buefy/types/components'
+import { BuefyNamespace } from 'buefy/types'
+import { Component, Vue } from '~/node_modules/vue-property-decorator'
+
+@Component({ name: 'dashboard' })
+class Dashboard extends Vue {
+  loading = true
+  cosplayersCount = 0
+  usersCount = 0
+  albumsCount = 0
+  contactsCount = 0
+  albumMediasCount = 0
+  username: string | null = null
+
+  created(): void {
+    this.fetchDashboard()
+  }
+
+  fetchDashboard(): void {
+    this.loading = true
+
+    this.$axios
+      .get('/api/admin/dashboard')
+      .then((res) => res.data)
+      .then((res) => {
+        this.username = res.user
+        this.cosplayersCount = res.cosplayersCount
+        this.usersCount = res.usersCount
+        this.albumsCount = res.albumsCount
+        this.contactsCount = res.contactsCount
+        this.albumMediasCount = res.albumMediasCount
+        this.loading = false
+      })
+      .catch((err) => {
+        this.loading = false
+        showError(
+          this.$buefy,
+          'Unable to load dashboard, maybe you are offline?',
+          this.fetchDashboard
+        )
+        throw err
+      })
+  }
+}
+
+export default Dashboard
+
+export function showSuccess(buefy: BuefyNamespace, message: string): void {
+  const snackBarConfig: SnackbarConfig = {
+    message,
+    type: 'is-success',
+    position: 'is-bottom-right',
+    queue: false
+  }
+  buefy.snackbar.open(snackBarConfig)
+}
+
+export function showError(
+  buefy: BuefyNamespace,
+  message: string,
+  onActionCallback?: () => void
+): void {
+  const snackBarConfig: SnackbarConfig = {
+    message,
+    type: 'is-danger',
+    position: 'is-bottom-right',
+    queue: false,
+    actionText: onActionCallback ? 'Retry' : 'OK',
+    onAction: onActionCallback
+  }
+  buefy.snackbar.open(snackBarConfig)
+}
+</script>

@@ -24,8 +24,11 @@
     },
     "types": [
       "@types/node",
-      "@nuxt/types"
-    ]
+      "@nuxt/types",
+      "@nuxt/vue-app",
+      "@nuxtjs/axios"
+    ],
+    "experimentalDecorators": true
   },
   "exclude": [
     "node_modules"
