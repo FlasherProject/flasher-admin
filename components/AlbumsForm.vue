@@ -221,7 +221,7 @@ interface AlbumErrorsInterface {
 })
 class AlbumsForm extends Vue {
   @Prop({ required: true, type: Boolean })
-  isCreating: boolean = true
+  isCreating!: boolean
 
   drag = false
   errors: AlbumErrorsInterface = {}
