@@ -6,7 +6,7 @@
           <div class="level-item">
             <div class="buttons">
               <b-button
-                :to="{ name: 'admin-cosplayers-create' }"
+                :to="{ name: 'cosplayers-create' }"
                 tag="nuxt-link"
                 type="is-success"
                 icon-left="plus"
@@ -66,7 +66,7 @@
           >
             <nuxt-link
               :to="{
-                name: 'admin-cosplayers-slug',
+                name: 'cosplayers-slug',
                 params: { slug: cosplayer.row.slug }
               }"
             >
@@ -101,7 +101,7 @@
 <script lang="ts">
 
 import { Component, Vue } from 'vue-property-decorator'
-import Cosplayer from '../../../models/cosplayer'
+import Cosplayer from '~/models/cosplayer'
 import { showError, showSuccess } from '~/helpers/toast'
 
 @Component({

@@ -119,7 +119,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import Testimonial from '../../../models/testimonial'
+import Testimonial from '~/models/testimonial'
 import { showError, showSuccess } from '~/helpers/toast'
 
 @Component({

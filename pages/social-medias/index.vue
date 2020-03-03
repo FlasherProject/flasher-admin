@@ -3,25 +3,25 @@
     <section>
       <div class="buttons">
         <b-button
-          :disabled="!checkedRows.length"
-          type="is-danger"
-          icon-left="trash-alt"
-          @click="confirmDeleteSelectedInvitations()"
-        >
-          Delete checked
-        </b-button>
-        <b-button
-          :to="{ name: 'admin-invitations-create' }"
+          :to="{ name: 'social-medias-create' }"
           tag="nuxt-link"
           type="is-success"
           icon-left="plus"
         >
-          Create
+          Add
+        </b-button>
+        <b-button
+          :disabled="!checkedRows.length"
+          type="is-danger"
+          icon-left="trash-alt"
+          @click="confirmDeleteSelectedSocialMedias()"
+        >
+          Delete checked
         </b-button>
       </div>
 
       <b-table
-        :data="invitations"
+        :data="socialMedias"
         :loading="loading"
         :total="total"
         :per-page="perPage"
@@ -35,59 +35,47 @@
         backend-pagination
         backend-sorting
         checkable
-        detailed
-        show-detail-icon
         @page-change="onPageChange"
         @sort="onSort"
       >
-        <template slot-scope="invitation">
+        <template slot-scope="socialMedia">
           <b-table-column
-            field="email"
-            label="E-mail"
+            field="name"
+            label="Name"
             sortable
           >
             <nuxt-link
               :to="{
-                name: 'admin-invitations-edit',
-                params: { id: invitation.row.id }
+                name: 'social-medias-id',
+                params: { id: socialMedia.row.id }
               }"
             >
-              {{ invitation.row.email }}
+              {{ socialMedia.row.name }}
             </nuxt-link>
           </b-table-column>
 
           <b-table-column
-            field="confirmed_at"
-            label="Confirmed"
+            field="url"
+            label="Url"
             sortable
           >
-            <b-icon
-              v-if="invitation.row.confirmed_at"
-              icon="check"
-              type="is-success"
-            />
-            <b-icon
-              v-else-if="invitation.row.expired"
-              icon="times"
-              type="is-danger"
-            />
-            <b-icon
-              v-else
-              icon="clock"
-              type="is-info"
-            />
+            <nuxt-link
+              :to="{
+                name: 'social-medias-id',
+                params: { id: socialMedia.row.id }
+              }"
+            >
+              {{ socialMedia.row.url }}
+            </nuxt-link>
           </b-table-column>
-        </template>
 
-        <template
-          slot="detail"
-          slot-scope="props"
-        >
-          <article>
-            <p>
-              {{ props.row.message }}
-            </p>
-          </article>
+          <b-table-column
+            field="active"
+            label="Active"
+            sortable
+          >
+            {{ socialMedia.row.active }}
+          </b-table-column>
         </template>
 
         <template slot="empty">
@@ -116,15 +104,15 @@
 <script lang="ts">
 
 import { Component, Vue } from 'vue-property-decorator'
-import Invitation from '../../../models/invitation'
+import SocialMedia from '~/models/social-media'
 import { showError, showSuccess } from '~/helpers/toast'
 
 @Component({
-  name: 'InvitationsIndex'
+  name: 'SocialMediasIndex'
 })
-export default class InvitationsIndex extends Vue {
-    private invitations: Array<Invitation> = [];
-    private checkedRows: Array<Invitation> = [];
+export default class SocialMediasIndex extends Vue {
+    private socialMedias: Array<SocialMedia> = [];
+    private checkedRows: Array<SocialMedia> = [];
     private total = 0;
     private page = 1;
     perPage = 10;
@@ -135,15 +123,15 @@ export default class InvitationsIndex extends Vue {
     defaultSortOrder = 'desc';
 
     created (): void {
-      this.fetchInvitations()
+      this.fetchSocialMedias()
     }
 
-    fetchInvitations (): void {
+    fetchSocialMedias (): void {
       this.loading = true
       const sortOrder = this.sortOrder === 'asc' ? '' : '-'
 
       this.$axios
-        .get('/api/admin/invitations', {
+        .get('/api/admin/social-medias', {
           params: {
             page: this.page,
             sort: sortOrder + this.sortField
@@ -153,17 +141,17 @@ export default class InvitationsIndex extends Vue {
         .then((res) => {
           this.perPage = res.meta.per_page
           this.total = res.meta.total
-          this.invitations = res.data
+          this.socialMedias = res.data
           this.loading = false
         })
         .catch((err) => {
-          this.invitations = []
+          this.socialMedias = []
           this.total = 0
           this.loading = false
           showError(
             this.$buefy,
-            'Unable to load invitations, maybe you are offline?',
-            this.fetchInvitations
+            'Unable to load socialMedias, maybe you are offline?',
+            this.fetchSocialMedias
           )
           throw err
         })
@@ -174,7 +162,7 @@ export default class InvitationsIndex extends Vue {
      */
     onPageChange (page: number): void {
       this.page = page
-      this.fetchInvitations()
+      this.fetchSocialMedias()
     }
 
     /*
@@ -183,35 +171,35 @@ export default class InvitationsIndex extends Vue {
     onSort (field: string, order: string): void {
       this.sortField = field
       this.sortOrder = order
-      this.fetchInvitations()
+      this.fetchSocialMedias()
     }
 
-    confirmDeleteSelectedInvitations (): void {
+    confirmDeleteSelectedSocialMedias (): void {
       this.$buefy.dialog.confirm({
-        title: 'Deleting invitations',
+        title: 'Deleting socialMedias',
         message:
-                'Are you sure you want to <b>delete</b> these invitations? This action cannot be undone.',
-        confirmText: 'Delete Invitations',
+                'Are you sure you want to <b>delete</b> these socialMedias? This action cannot be undone.',
+        confirmText: 'Delete SocialMedias',
         type: 'is-danger',
         hasIcon: true,
         onConfirm: () => {
-          this.deleteSelectedInvitations()
+          this.deleteSelectedSocialMedias()
         }
       })
     }
 
-    deleteSelectedInvitations (): void {
-      this.checkedRows.forEach((invitation) => {
+    deleteSelectedSocialMedias (): void {
+      this.checkedRows.forEach((socialMedia) => {
         this.$axios
-          .delete(`/api/admin/invitations/${invitation.id}`)
+          .delete(`/api/admin/social-medias/${socialMedia.id}`)
           .then(() => {
-            showSuccess(this.$buefy, 'Invitations deleted')
-            this.fetchInvitations()
+            showSuccess(this.$buefy, 'SocialMedias deleted')
+            this.fetchSocialMedias()
           })
           .catch((err) => {
             showError(
               this.$buefy,
-                        `Unable to delete invitation <br> <small>${err.message}</small>`
+                        `Unable to delete socialMedia <br> <small>${err.message}</small>`
             )
             throw err
           })

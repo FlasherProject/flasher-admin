@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import AlbumsForm from '../../../components/AlbumsForm'
+import AlbumsForm from '~/components/AlbumsForm'
 
 export default {
   name: 'AlbumEdit',

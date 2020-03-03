@@ -190,7 +190,7 @@ export default class SocialMediasForm extends Vue {
         this.errors = {}
         showSuccess(this.$buefy, 'SocialMedia successfully created')
         await this.$router.push({
-          name: 'admin-social-medias-id',
+          name: 'social-medias-id',
           params: { id: this.socialMedia.id.toString() }
         })
       } catch (exception) {
@@ -227,7 +227,7 @@ export default class SocialMediasForm extends Vue {
                 `/api/admin/social-medias/${this.socialMedia.id}`
         )
         showSuccess(this.$buefy, 'SocialMedia successfully deleted!')
-        await this.$router.push({ name: 'admin-social-medias' })
+        await this.$router.push({ name: 'social-medias' })
       } catch (exception) {
         showError(this.$buefy, 'Unable to delete the picture')
         throw exception

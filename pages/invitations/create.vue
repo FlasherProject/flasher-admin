@@ -46,8 +46,8 @@
 <script lang="ts">
 
 import { Component, Vue } from 'vue-property-decorator'
-import Invitation from '../../../models/invitation'
-import Cosplayer from '../../../models/cosplayer'
+import Invitation from '~/models/invitation'
+import Cosplayer from '~/models/cosplayer'
 import { showError, showSuccess } from '~/helpers/toast'
 import PickOneCosplayer from '~/components/PickOneCosplayer.vue'
 
@@ -68,7 +68,7 @@ export default class InvitationsCreate extends Vue {
         .then(res => res.data)
         .then(() => {
           showSuccess(this.$buefy, 'Invitation successfully created')
-          this.$router.push({ name: 'admin-invitations' })
+          this.$router.push({ name: 'invitations' })
         })
         .catch((err) => {
           showError(

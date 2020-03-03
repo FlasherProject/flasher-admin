@@ -351,7 +351,7 @@ class AlbumsForm extends Vue {
       }
       showSuccess(this.$buefy, 'Album successfully created')
       await this.$router.push({
-        name: 'admin-albums-edit',
+        name: 'albums-edit',
         params: { slug: this.album.slug }
       })
     } catch (exception) {
@@ -403,7 +403,7 @@ class AlbumsForm extends Vue {
     try {
       await this.$axios.delete(`/api/admin/albums/${this.album.slug}`)
       showSuccess(this.$buefy, 'Album successfully deleted!')
-      await this.$router.push({ name: 'admin-albums-index' })
+      await this.$router.push({ name: 'albums-index' })
     } catch (exception) {
       showError(this.$buefy, 'Unable to delete the picture')
       throw exception

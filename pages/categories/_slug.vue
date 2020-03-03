@@ -91,7 +91,7 @@ import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 import { Component, Vue } from 'vue-property-decorator'
-import Category from '../../../models/category'
+import Category from '~/models/category'
 import { showSuccess } from '~/helpers/toast'
 
 @Component({
@@ -154,7 +154,7 @@ export default class CategoriesEdit extends Vue {
           this.category = res.data
           this.loading = false
           showSuccess(this.$buefy, 'Category updated')
-          this.$router.push({ name: 'admin-categories' })
+          this.$router.push({ name: 'categories' })
         })
         .catch((err) => {
           this.loading = false

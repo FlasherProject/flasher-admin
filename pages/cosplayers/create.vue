@@ -116,8 +116,8 @@ import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 import { quillEditor } from 'vue-quill-editor'
 import { Component, Vue } from 'vue-property-decorator'
-import User from '../../../models/user'
-import Cosplayer from '../../../models/cosplayer'
+import User from '~/models/user'
+import Cosplayer from '~/models/cosplayer'
 import { showError, showSuccess } from '~/helpers/toast'
 
 @Component({
@@ -154,7 +154,7 @@ export default class CosplayersCreate extends Vue {
           this.errors = {}
           this.loading = false
           showSuccess(this.$buefy, 'Cosplayer created')
-          this.$router.push({ name: 'admin-cosplayers' })
+          this.$router.push({ name: 'cosplayers' })
         })
         .catch((err) => {
           this.loading = false

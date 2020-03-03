@@ -6,10 +6,18 @@
           <div class="level-item">
             <div class="buttons">
               <b-button
+                :to="{ name: 'categories-create' }"
+                tag="nuxt-link"
+                type="is-success"
+                icon-left="plus"
+              >
+                Add
+              </b-button>
+              <b-button
                 :disabled="!checkedRows.length"
                 type="is-danger"
                 icon-left="trash-alt"
-                @click="confirmDeleteSelectedContacts"
+                @click="confirmDeleteSelectedCategories"
               >
                 Delete checked
               </b-button>
@@ -25,20 +33,19 @@
               placeholder="Search..."
               type="search"
               icon="search"
-              @input="fetchContacts()"
+              @input="fetchCategories()"
             />
           </b-field>
         </div>
       </div>
 
       <b-table
-        :data="contacts"
+        :data="categories"
         :loading="loading"
         :total="total"
         :per-page="perPage"
         :default-sort-direction="defaultSortOrder"
         :default-sort="[sortField, sortOrder]"
-        :show-detail-icon="showDetailIcon"
         :checked-rows.sync="checkedRows"
         striped
         hoverable
@@ -47,41 +54,24 @@
         backend-pagination
         backend-sorting
         checkable
-        detailed
-        detail-key="id"
         @page-change="onPageChange"
         @sort="onSort"
       >
-        <template slot-scope="contact">
+        <template slot-scope="category">
           <b-table-column
             field="name"
             label="Name"
             sortable
           >
-            {{ contact.row.name }}
+            <nuxt-link
+              :to="{
+                name: 'categories-slug',
+                params: { slug: category.row.slug }
+              }"
+            >
+              {{ category.row.name }}
+            </nuxt-link>
           </b-table-column>
-
-          <b-table-column
-            field="email"
-            label="Email"
-            sortable
-          >
-            <a
-              :href="`mailto:${contact.row.email}`"
-              target="_blank"
-            >{{ contact.row.email }}</a>
-          </b-table-column>
-        </template>
-
-        <template
-          slot="detail"
-          slot-scope="props"
-        >
-          <article>
-            <p>
-              {{ props.row.message }}
-            </p>
-          </article>
         </template>
 
         <template slot="empty">
@@ -108,13 +98,12 @@
 </template>
 
 <script lang="ts">
-
 import { Component, Vue } from 'vue-property-decorator'
-import Contact from '../../../models/contact'
+import Category from '~/models/category'
 import { showError, showSuccess } from '~/helpers/toast'
 
 @Component({
-  name: 'ContactsIndex',
+  name: 'CategoriesIndex',
   filters: {
     /**
          * Filter to truncate string, accepts a length parameter
@@ -126,9 +115,9 @@ import { showError, showSuccess } from '~/helpers/toast'
     }
   }
 })
-export default class ContactsIndex extends Vue {
-    private contacts: Array<Contact> = [];
-    private checkedRows: Array<Contact> = [];
+export default class CategoriesIndex extends Vue {
+    private categories: Array<Category> = [];
+    private checkedRows: Array<Category> = [];
     private total = 0;
     private page = 1;
     perPage = 10;
@@ -140,15 +129,15 @@ export default class ContactsIndex extends Vue {
     private search = '';
 
     created (): void {
-      this.fetchContacts()
+      this.fetchCategories()
     }
 
-    fetchContacts (): void {
+    fetchCategories (): void {
       this.loading = true
       const sortOrder = this.sortOrder === 'asc' ? '' : '-'
 
       this.$axios
-        .get('/api/admin/contacts', {
+        .get('/api/admin/categories', {
           params: {
             page: this.page,
             sort: sortOrder + this.sortField,
@@ -159,17 +148,17 @@ export default class ContactsIndex extends Vue {
         .then((res) => {
           this.perPage = res.meta.per_page
           this.total = res.meta.total
-          this.contacts = res.data
+          this.categories = res.data
           this.loading = false
         })
         .catch((err) => {
-          this.contacts = []
+          this.categories = []
           this.total = 0
           this.loading = false
           showError(
             this.$buefy,
-            'Unable to load contacts, maybe you are offline?',
-            this.fetchContacts
+            'Unable to load categories, maybe you are offline?',
+            this.fetchCategories
           )
           throw err
         })
@@ -180,7 +169,7 @@ export default class ContactsIndex extends Vue {
      */
     onPageChange (page: number): void {
       this.page = page
-      this.fetchContacts()
+      this.fetchCategories()
     }
 
     /*
@@ -189,38 +178,38 @@ export default class ContactsIndex extends Vue {
     onSort (field: string, order: string): void {
       this.sortField = field
       this.sortOrder = order
-      this.fetchContacts()
+      this.fetchCategories()
     }
 
-    confirmDeleteSelectedContacts (): void {
+    confirmDeleteSelectedCategories (): void {
       this.$buefy.dialog.confirm({
-        title: 'Deleting Contacts',
+        title: 'Deleting Categories',
         message:
-                'Are you sure you want to <b>delete</b> these contacts? This action cannot be undone.',
-        confirmText: 'Delete Contacts',
+                'Are you sure you want to <b>delete</b> these categories? This action cannot be undone.',
+        confirmText: 'Delete Categories',
         type: 'is-danger',
         hasIcon: true,
         onConfirm: () => {
-          this.deleteSelectedContacts()
+          this.deleteSelectedCategories()
         }
       })
     }
 
     /**
-     * Delete contact from slug
+     * Delete category from slug
      */
-    deleteSelectedContacts (): void {
-      this.checkedRows.forEach((contact) => {
+    deleteSelectedCategories (): void {
+      this.checkedRows.forEach((category) => {
         this.$axios
-          .delete(`/api/admin/contacts/${contact.id}`)
+          .delete(`/api/admin/categories/${category.slug}`)
           .then(() => {
-            showSuccess(this.$buefy, 'Contacts deleted')
-            this.fetchContacts()
+            showSuccess(this.$buefy, 'Categories deleted')
+            this.fetchCategories()
           })
           .catch((err) => {
             showError(
               this.$buefy,
-                        `Unable to delete contact <br> <small>${err.message}</small>`
+                        `Unable to delete category <br> <small>${err.message}</small>`
             )
             throw err
           })

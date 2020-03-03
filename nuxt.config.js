@@ -87,6 +87,7 @@ export default {
     '/api': 'http://localhost:8000'
   },
   router: {
+    base: '/admin',
     middleware: ['auth']
   },
   auth: {

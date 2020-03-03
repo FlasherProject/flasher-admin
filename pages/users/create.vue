@@ -79,7 +79,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import User from '../../../models/user'
+import User from '~/models/user'
 import { showError, showSuccess } from '~/helpers/toast'
 
 @Component({
@@ -99,7 +99,7 @@ export default class UsersCreate extends Vue {
         .then(() => {
           this.errors = {}
           this.loading = false
-          this.$router.push({ name: 'admin-users' })
+          this.$router.push({ name: 'users' })
           showSuccess(this.$buefy, 'User created')
         })
         .catch((err) => {
@@ -135,7 +135,7 @@ export default class UsersCreate extends Vue {
       this.$axios
         .delete(`/api/admin/users/${this.user.id}`)
         .then(() => {
-          this.$router.push({ name: 'admin-users' })
+          this.$router.push({ name: 'users' })
           showSuccess(this.$buefy, 'User deleted')
         })
         .catch((err) => {

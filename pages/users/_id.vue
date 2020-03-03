@@ -97,7 +97,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import User from '../../../models/user'
+import User from '~/models/user'
 import { showError, showSuccess } from '~/helpers/toast'
 
 @Component({
@@ -121,7 +121,7 @@ export default class UsersEdit extends Vue {
         .then(() => {
           this.errors = {}
           this.loading = false
-          this.$router.push({ name: 'admin-users' })
+          this.$router.push({ name: 'users' })
           showSuccess(this.$buefy, 'User updated')
         })
         .catch((err) => {
@@ -175,10 +175,13 @@ export default class UsersEdit extends Vue {
      * Delete user from slug
      */
     deleteUser (): void {
+      if (!this.user) {
+        throw new Error('Unable to delete with undefined user')
+      }
       this.$axios
         .delete(`/api/admin/users/${this.user.id}`)
         .then(() => {
-          this.$router.push({ name: 'admin-users' })
+          this.$router.push({ name: 'users' })
           showSuccess(this.$buefy, 'User deleted')
         })
         .catch((err) => {

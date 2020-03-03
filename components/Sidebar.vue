@@ -10,55 +10,55 @@
           exact
         />
         <b-menu-item
-          :to="{ name: 'admin-albums' }"
+          :to="{ name: 'albums' }"
           label="Albums"
           icon="images"
           tag="nuxt-link"
         />
         <b-menu-item
-          :to="{ name: 'admin-categories' }"
+          :to="{ name: 'categories' }"
           label="Categories"
           icon="tags"
           tag="nuxt-link"
         />
         <b-menu-item
-          :to="{ name: 'admin-cosplayers' }"
+          :to="{ name: 'cosplayers' }"
           label="Cosplayers"
           icon="user-tag"
           tag="nuxt-link"
         />
         <b-menu-item
-          :to="{ name: 'admin-contacts' }"
+          :to="{ name: 'contacts' }"
           label="Contacts"
           icon="pen-fancy"
           tag="nuxt-link"
         />
         <b-menu-item
-          :to="{ name: 'admin-users' }"
+          :to="{ name: 'users' }"
           label="Users"
           icon="user"
           tag="nuxt-link"
         />
         <b-menu-item
-          :to="{ name: 'admin-testimonials' }"
+          :to="{ name: 'testimonials' }"
           label="Testimonials"
           icon="book"
           tag="nuxt-link"
         />
         <b-menu-item
-          :to="{ name: 'admin-social-medias' }"
+          :to="{ name: 'social-medias' }"
           label="Social medias"
           icon="external-link-alt"
           tag="nuxt-link"
         />
         <b-menu-item
-          :to="{ name: 'admin-invitations' }"
+          :to="{ name: 'invitations' }"
           label="Invitations"
           icon="envelope-open-text"
           tag="nuxt-link"
         />
         <b-menu-item
-          :to="{ name: 'admin-settings' }"
+          :to="{ name: 'settings' }"
           label="Settings"
           icon="cog"
           tag="nuxt-link"

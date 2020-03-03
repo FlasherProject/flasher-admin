@@ -1,46 +1,27 @@
 <template>
   <div>
     <section>
-      <div class="level">
-        <div class="level-left">
-          <div class="level-item">
-            <div class="buttons">
-              <b-button
-                :to="{ name: 'admin-categories-create' }"
-                tag="nuxt-link"
-                type="is-success"
-                icon-left="plus"
-              >
-                Add
-              </b-button>
-              <b-button
-                :disabled="!checkedRows.length"
-                type="is-danger"
-                icon-left="trash-alt"
-                @click="confirmDeleteSelectedCategories"
-              >
-                Delete checked
-              </b-button>
-            </div>
-          </div>
-        </div>
-
-        <div class="level-right">
-          <b-field class="is-pulled-right">
-            <b-input
-              v-model="search"
-              :loading="loading"
-              placeholder="Search..."
-              type="search"
-              icon="search"
-              @input="fetchCategories()"
-            />
-          </b-field>
-        </div>
+      <div class="buttons">
+        <b-button
+          :to="{ name: 'users-create' }"
+          tag="nuxt-link"
+          type="is-success"
+          icon-left="plus"
+        >
+          Add
+        </b-button>
+        <b-button
+          :disabled="!checkedRows.length"
+          type="is-danger"
+          icon-left="trash-alt"
+          @click="confirmDeleteSelectedUsers()"
+        >
+          Delete checked
+        </b-button>
       </div>
 
       <b-table
-        :data="categories"
+        :data="users"
         :loading="loading"
         :total="total"
         :per-page="perPage"
@@ -57,7 +38,7 @@
         @page-change="onPageChange"
         @sort="onSort"
       >
-        <template slot-scope="category">
+        <template slot-scope="user">
           <b-table-column
             field="name"
             label="Name"
@@ -65,13 +46,49 @@
           >
             <nuxt-link
               :to="{
-                name: 'admin-categories-slug',
-                params: { slug: category.row.slug }
+                name: 'users-id',
+                params: { id: user.row.id }
               }"
             >
-              {{ category.row.name }}
+              {{ user.row.name }}
             </nuxt-link>
           </b-table-column>
+
+          <b-table-column
+            field="email"
+            label="E-mail"
+            sortable
+          >
+            <nuxt-link
+              :to="{
+                name: 'users-id',
+                params: { id: user.row.id }
+              }"
+            >
+              {{ user.row.email }}
+            </nuxt-link>
+          </b-table-column>
+
+          <b-table-column
+            field="status"
+            label="Role"
+            centered
+          >
+            <span
+              :title="'User role'"
+              class="tag is-dark"
+            >{{
+              user.row.role
+            }}</span>
+          </b-table-column>
+
+          <!--                    <b-table-column field="actions.impersonate" label="Impersonate" centered>-->
+          <!--                        <a :href="user.row.actions.impersonate">-->
+          <!--                            <span class="icon has-text-info">-->
+          <!--                                <i class="fas fa-sign-in-alt"></i>-->
+          <!--                            </span>-->
+          <!--                        </a>-->
+          <!--                    </b-table-column>-->
         </template>
 
         <template slot="empty">
@@ -98,26 +115,17 @@
 </template>
 
 <script lang="ts">
+
 import { Component, Vue } from 'vue-property-decorator'
-import Category from '~/models/category'
+import User from '~/models/user'
 import { showError, showSuccess } from '~/helpers/toast'
 
 @Component({
-  name: 'CategoriesIndex',
-  filters: {
-    /**
-         * Filter to truncate string, accepts a length parameter
-         */
-    truncate (value: string, length: number): string {
-      return value.length > length
-        ? value.substr(0, length) + '...'
-        : value
-    }
-  }
+  name: 'UsersIndex'
 })
-export default class CategoriesIndex extends Vue {
-    private categories: Array<Category> = [];
-    private checkedRows: Array<Category> = [];
+export default class UsersIndex extends Vue {
+    private users: Array<User> = [];
+    private checkedRows: Array<User> = [];
     private total = 0;
     private page = 1;
     perPage = 10;
@@ -126,39 +134,37 @@ export default class CategoriesIndex extends Vue {
     private sortOrder = 'desc';
     showDetailIcon = true;
     defaultSortOrder = 'desc';
-    private search = '';
 
     created (): void {
-      this.fetchCategories()
+      this.fetchUsers()
     }
 
-    fetchCategories (): void {
+    fetchUsers (): void {
       this.loading = true
       const sortOrder = this.sortOrder === 'asc' ? '' : '-'
 
       this.$axios
-        .get('/api/admin/categories', {
+        .get('/api/admin/users', {
           params: {
             page: this.page,
-            sort: sortOrder + this.sortField,
-            'filter[name]': this.search
+            sort: sortOrder + this.sortField
           }
         })
         .then(res => res.data)
         .then((res) => {
           this.perPage = res.meta.per_page
           this.total = res.meta.total
-          this.categories = res.data
+          this.users = res.data
           this.loading = false
         })
         .catch((err) => {
-          this.categories = []
+          this.users = []
           this.total = 0
           this.loading = false
           showError(
             this.$buefy,
-            'Unable to load categories, maybe you are offline?',
-            this.fetchCategories
+            'Unable to load users, maybe you are offline?',
+            this.fetchUsers
           )
           throw err
         })
@@ -169,7 +175,7 @@ export default class CategoriesIndex extends Vue {
      */
     onPageChange (page: number): void {
       this.page = page
-      this.fetchCategories()
+      this.fetchUsers()
     }
 
     /*
@@ -178,38 +184,38 @@ export default class CategoriesIndex extends Vue {
     onSort (field: string, order: string): void {
       this.sortField = field
       this.sortOrder = order
-      this.fetchCategories()
+      this.fetchUsers()
     }
 
-    confirmDeleteSelectedCategories (): void {
+    confirmDeleteSelectedUsers (): void {
       this.$buefy.dialog.confirm({
-        title: 'Deleting Categories',
+        title: 'Deleting Users',
         message:
-                'Are you sure you want to <b>delete</b> these categories? This action cannot be undone.',
-        confirmText: 'Delete Categories',
+                'Are you sure you want to <b>delete</b> these users? This action cannot be undone.',
+        confirmText: 'Delete Users',
         type: 'is-danger',
         hasIcon: true,
         onConfirm: () => {
-          this.deleteSelectedCategories()
+          this.deleteSelectedUsers()
         }
       })
     }
 
     /**
-     * Delete category from slug
+     * Delete user from slug
      */
-    deleteSelectedCategories (): void {
-      this.checkedRows.forEach((category) => {
+    deleteSelectedUsers (): void {
+      this.checkedRows.forEach((user) => {
         this.$axios
-          .delete(`/api/admin/categories/${category.slug}`)
+          .delete(`/api/admin/users/${user.id}`)
           .then(() => {
-            showSuccess(this.$buefy, 'Categories deleted')
-            this.fetchCategories()
+            showSuccess(this.$buefy, 'Users deleted')
+            this.fetchUsers()
           })
           .catch((err) => {
             showError(
               this.$buefy,
-                        `Unable to delete category <br> <small>${err.message}</small>`
+                        `Unable to delete user <br> <small>${err.message}</small>`
             )
             throw err
           })

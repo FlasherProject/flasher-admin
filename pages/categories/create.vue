@@ -53,7 +53,7 @@ import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 import { quillEditor } from 'vue-quill-editor'
 import { Component, Vue } from 'vue-property-decorator'
-import User from '../../../models/user'
+import User from '~/models/user'
 import Category from '~/models/category'
 import { showError, showSuccess } from '~/helpers/toast'
 
@@ -85,7 +85,7 @@ export default class CategoriesCreate extends Vue {
           this.loading = false
           this.category = res.data
           showSuccess(this.$buefy, 'Category created')
-          this.$router.push({ name: 'admin-categories' })
+          this.$router.push({ name: 'categories' })
         })
         .catch((err) => {
           this.loading = false

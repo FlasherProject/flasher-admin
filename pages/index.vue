@@ -1,46 +1,133 @@
 <template>
-  <section class="section">
-    <div class="columns is-mobile">
-      <card title="Free" icon="github-circle">
-        Open source on
-        <a href="https://github.com/buefy/buefy">
-          GitHub
-        </a>
-      </card>
+  <div>
+    <b-loading :is-full-page="false" :active="loading" />
+    <div v-if="!loading">
+      <section class="hero is-info welcome is-small has-margin-bottom-sm">
+        <div class="hero-body">
+          <div class="container">
+            <h1 class="title is-1">
+              Hello, {{ username }}.
+            </h1>
+            <h2 class="subtitle">
+              I hope you are having a great day!
+            </h2>
+          </div>
+        </div>
+      </section>
+      <section class="info-tiles">
+        <div class="tile is-ancestor has-text-centered">
+          <nuxt-link
+            :to="{ name: 'users' }"
+            class="tile is-parent"
+          >
+            <article class="tile is-child box">
+              <p class="title">
+                {{ usersCount }}
+              </p>
+              <p class="subtitle">
+                Users
+              </p>
+            </article>
+          </nuxt-link>
 
-      <card title="Responsive" icon="cellphone-link">
-        <b class="has-text-grey">
-          Every
-        </b>
-        component is responsive
-      </card>
+          <nuxt-link
+            :to="{ name: 'albums' }"
+            class="tile is-parent"
+          >
+            <article class="tile is-child box">
+              <p class="title">
+                {{ albumsCount }}
+              </p>
+              <p class="subtitle">
+                Albums
+              </p>
+            </article>
+          </nuxt-link>
 
-      <card title="Modern" icon="alert-decagram">
-        Built with
-        <a href="https://vuejs.org/">
-          Vue.js
-        </a>
-        and
-        <a href="http://bulma.io/">
-          Bulma
-        </a>
-      </card>
+          <nuxt-link
+            :to="{ name: 'albums' }"
+            class="tile is-parent"
+          >
+            <article class="tile is-child box">
+              <p class="title">
+                {{ albumMediasCount }}
+              </p>
+              <p class="subtitle">
+                Medias
+              </p>
+            </article>
+          </nuxt-link>
 
-      <card title="Lightweight" icon="arrange-bring-to-front">
-        No other internal dependency
-      </card>
+          <nuxt-link
+            :to="{ name: 'cosplayers' }"
+            class="tile is-parent"
+          >
+            <article class="tile is-child box">
+              <p class="title">
+                {{ cosplayersCount }}
+              </p>
+              <p class="subtitle">
+                Cosplayers
+              </p>
+            </article>
+          </nuxt-link>
+
+          <a class="tile is-parent">
+            <article class="tile is-child box">
+              <p class="title">{{ contactsCount }}</p>
+              <p class="subtitle">Contacts</p>
+            </article>
+          </a>
+        </div>
+      </section>
     </div>
-  </section>
+  </div>
 </template>
 
-<script>
-import Card from '~/components/Card'
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+import { showError } from '~/helpers/toast'
 
-export default {
-  name: 'HomePage',
+@Component({ name: 'dashboard' })
+class Dashboard extends Vue {
+  loading = true
+  cosplayersCount = 0
+  usersCount = 0
+  albumsCount = 0
+  contactsCount = 0
+  albumMediasCount = 0
+  username: string | null = null
 
-  components: {
-    Card
+  created (): void {
+    this.fetchDashboard()
+  }
+
+  fetchDashboard (): void {
+    this.loading = true
+
+    this.$axios
+      .get('/api/admin/dashboard')
+      .then(res => res.data)
+      .then((res) => {
+        this.username = res.user
+        this.cosplayersCount = res.cosplayersCount
+        this.usersCount = res.usersCount
+        this.albumsCount = res.albumsCount
+        this.contactsCount = res.contactsCount
+        this.albumMediasCount = res.albumMediasCount
+        this.loading = false
+      })
+      .catch((err) => {
+        this.loading = false
+        showError(
+          this.$buefy,
+          'Unable to load dashboard, maybe you are offline?',
+          this.fetchDashboard
+        )
+        throw err
+      })
   }
 }
+
+export default Dashboard
 </script>

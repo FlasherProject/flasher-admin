@@ -92,7 +92,7 @@
               <div class="media-right">
                 <b-button
                   :to="{
-                    name: 'admin-users-id',
+                    name: 'users-id',
                     params: { id: cosplayer.user.id }
                   }"
                   tag="nuxt-link"
@@ -135,8 +135,8 @@ import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 import { Component, Vue } from 'vue-property-decorator'
-import Cosplayer from '../../../models/cosplayer'
-import User from '../../../models/user'
+import Cosplayer from '~/models/cosplayer'
+import User from '~/models/user'
 import { showError, showSuccess } from '~/helpers/toast'
 import PickOneUser from '~/components/PickOneUser.vue'
 

@@ -6,7 +6,7 @@
           <div class="level-item">
             <div class="buttons">
               <b-button
-                :to="{ name: 'admin-albums-create' }"
+                :to="{ name: 'albums-create' }"
                 tag="nuxt-link"
                 type="is-success"
                 icon-left="plus"
@@ -61,7 +61,7 @@
           <b-table-column field="title" label="Title" sortable>
             <nuxt-link
               :to="{
-                name: 'admin-albums-slug',
+                name: 'albums-slug',
                 params: { slug: album.row.slug }
               }"
             >
@@ -121,7 +121,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import Album from '../../../models/album'
+import Album from '~/models/album'
 import { showError, showSuccess } from '~/helpers/toast'
 
 @Component({
