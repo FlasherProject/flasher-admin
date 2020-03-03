@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from '~/node_modules/vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import Cosplayer from '~/models/cosplayer'
 import { showError } from '~/helpers/toast'
 

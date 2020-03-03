@@ -70,6 +70,7 @@
           </div>
           <div v-else>
             <vue-dropzone
+              id="dropzone"
               ref="myVueDropzone"
               :options="dropzoneOptions"
               class="has-margin-bottom-md"
@@ -86,11 +87,11 @@
 <script lang="ts">
 import vue2Dropzone from 'vue2-dropzone'
 import { quillEditor } from 'vue-quill-editor'
-import Category from '../../../models/category'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
-import { Component, Vue } from '~/node_modules/vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
+import Category from '../../../models/category'
 import { showSuccess } from '~/helpers/toast'
 
 @Component({

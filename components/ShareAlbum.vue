@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from '~/node_modules/vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import { showError, showSuccess } from '~/helpers/toast'
 import Album from '~/models/album'
 

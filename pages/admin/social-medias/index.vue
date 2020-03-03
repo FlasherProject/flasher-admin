@@ -1,46 +1,27 @@
 <template>
   <div>
     <section>
-      <div class="level">
-        <div class="level-left">
-          <div class="level-item">
-            <div class="buttons">
-              <b-button
-                :to="{ name: 'admin-categories-create' }"
-                tag="nuxt-link"
-                type="is-success"
-                icon-left="plus"
-              >
-                Add
-              </b-button>
-              <b-button
-                :disabled="!checkedRows.length"
-                type="is-danger"
-                icon-left="trash-alt"
-                @click="confirmDeleteSelectedCategories"
-              >
-                Delete checked
-              </b-button>
-            </div>
-          </div>
-        </div>
-
-        <div class="level-right">
-          <b-field class="is-pulled-right">
-            <b-input
-              v-model="search"
-              :loading="loading"
-              placeholder="Search..."
-              type="search"
-              icon="search"
-              @input="fetchCategories()"
-            />
-          </b-field>
-        </div>
+      <div class="buttons">
+        <b-button
+          :to="{ name: 'admin-social-medias-create' }"
+          tag="nuxt-link"
+          type="is-success"
+          icon-left="plus"
+        >
+          Add
+        </b-button>
+        <b-button
+          :disabled="!checkedRows.length"
+          type="is-danger"
+          icon-left="trash-alt"
+          @click="confirmDeleteSelectedSocialMedias()"
+        >
+          Delete checked
+        </b-button>
       </div>
 
       <b-table
-        :data="categories"
+        :data="socialMedias"
         :loading="loading"
         :total="total"
         :per-page="perPage"
@@ -57,7 +38,7 @@
         @page-change="onPageChange"
         @sort="onSort"
       >
-        <template slot-scope="category">
+        <template slot-scope="socialMedia">
           <b-table-column
             field="name"
             label="Name"
@@ -65,12 +46,35 @@
           >
             <nuxt-link
               :to="{
-                name: 'admin-categories-slug',
-                params: { slug: category.row.slug }
+                name: 'admin-social-medias-id',
+                params: { id: socialMedia.row.id }
               }"
             >
-              {{ category.row.name }}
+              {{ socialMedia.row.name }}
             </nuxt-link>
+          </b-table-column>
+
+          <b-table-column
+            field="url"
+            label="Url"
+            sortable
+          >
+            <nuxt-link
+              :to="{
+                name: 'admin-social-medias-id',
+                params: { id: socialMedia.row.id }
+              }"
+            >
+              {{ socialMedia.row.url }}
+            </nuxt-link>
+          </b-table-column>
+
+          <b-table-column
+            field="active"
+            label="Active"
+            sortable
+          >
+            {{ socialMedia.row.active }}
           </b-table-column>
         </template>
 
@@ -98,26 +102,17 @@
 </template>
 
 <script lang="ts">
+
 import { Component, Vue } from 'vue-property-decorator'
-import Category from '~/models/category'
+import SocialMedia from '../../../models/social-media'
 import { showError, showSuccess } from '~/helpers/toast'
 
 @Component({
-  name: 'CategoriesIndex',
-  filters: {
-    /**
-         * Filter to truncate string, accepts a length parameter
-         */
-    truncate (value: string, length: number): string {
-      return value.length > length
-        ? value.substr(0, length) + '...'
-        : value
-    }
-  }
+  name: 'SocialMediasIndex'
 })
-export default class CategoriesIndex extends Vue {
-    private categories: Array<Category> = [];
-    private checkedRows: Array<Category> = [];
+export default class SocialMediasIndex extends Vue {
+    private socialMedias: Array<SocialMedia> = [];
+    private checkedRows: Array<SocialMedia> = [];
     private total = 0;
     private page = 1;
     perPage = 10;
@@ -126,39 +121,37 @@ export default class CategoriesIndex extends Vue {
     private sortOrder = 'desc';
     showDetailIcon = true;
     defaultSortOrder = 'desc';
-    private search = '';
 
     created (): void {
-      this.fetchCategories()
+      this.fetchSocialMedias()
     }
 
-    fetchCategories (): void {
+    fetchSocialMedias (): void {
       this.loading = true
       const sortOrder = this.sortOrder === 'asc' ? '' : '-'
 
       this.$axios
-        .get('/api/admin/categories', {
+        .get('/api/admin/social-medias', {
           params: {
             page: this.page,
-            sort: sortOrder + this.sortField,
-            'filter[name]': this.search
+            sort: sortOrder + this.sortField
           }
         })
         .then(res => res.data)
         .then((res) => {
           this.perPage = res.meta.per_page
           this.total = res.meta.total
-          this.categories = res.data
+          this.socialMedias = res.data
           this.loading = false
         })
         .catch((err) => {
-          this.categories = []
+          this.socialMedias = []
           this.total = 0
           this.loading = false
           showError(
             this.$buefy,
-            'Unable to load categories, maybe you are offline?',
-            this.fetchCategories
+            'Unable to load socialMedias, maybe you are offline?',
+            this.fetchSocialMedias
           )
           throw err
         })
@@ -169,7 +162,7 @@ export default class CategoriesIndex extends Vue {
      */
     onPageChange (page: number): void {
       this.page = page
-      this.fetchCategories()
+      this.fetchSocialMedias()
     }
 
     /*
@@ -178,38 +171,35 @@ export default class CategoriesIndex extends Vue {
     onSort (field: string, order: string): void {
       this.sortField = field
       this.sortOrder = order
-      this.fetchCategories()
+      this.fetchSocialMedias()
     }
 
-    confirmDeleteSelectedCategories (): void {
+    confirmDeleteSelectedSocialMedias (): void {
       this.$buefy.dialog.confirm({
-        title: 'Deleting Categories',
+        title: 'Deleting socialMedias',
         message:
-                'Are you sure you want to <b>delete</b> these categories? This action cannot be undone.',
-        confirmText: 'Delete Categories',
+                'Are you sure you want to <b>delete</b> these socialMedias? This action cannot be undone.',
+        confirmText: 'Delete SocialMedias',
         type: 'is-danger',
         hasIcon: true,
         onConfirm: () => {
-          this.deleteSelectedCategories()
+          this.deleteSelectedSocialMedias()
         }
       })
     }
 
-    /**
-     * Delete category from slug
-     */
-    deleteSelectedCategories (): void {
-      this.checkedRows.forEach((category) => {
+    deleteSelectedSocialMedias (): void {
+      this.checkedRows.forEach((socialMedia) => {
         this.$axios
-          .delete(`/api/admin/categories/${category.slug}`)
+          .delete(`/api/admin/social-medias/${socialMedia.id}`)
           .then(() => {
-            showSuccess(this.$buefy, 'Categories deleted')
-            this.fetchCategories()
+            showSuccess(this.$buefy, 'SocialMedias deleted')
+            this.fetchSocialMedias()
           })
           .catch((err) => {
             showError(
               this.$buefy,
-                        `Unable to delete category <br> <small>${err.message}</small>`
+                        `Unable to delete socialMedia <br> <small>${err.message}</small>`
             )
             throw err
           })

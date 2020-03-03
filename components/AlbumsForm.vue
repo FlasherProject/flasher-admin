@@ -191,7 +191,7 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 import { quillEditor } from 'vue-quill-editor'
 import { DropzoneOptions } from 'dropzone'
 import draggable from 'vuedraggable'
-import { Component, Prop, Vue } from '~/node_modules/vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import Album from '~/models/album'
 import Category from '~/models/category'
 import Cosplayer from '~/models/cosplayer'
@@ -403,7 +403,7 @@ class AlbumsForm extends Vue {
     try {
       await this.$axios.delete(`/api/admin/albums/${this.album.slug}`)
       showSuccess(this.$buefy, 'Album successfully deleted!')
-      await this.$router.push({ name: 'admin.albums.index' })
+      await this.$router.push({ name: 'admin-albums-index' })
     } catch (exception) {
       showError(this.$buefy, 'Unable to delete the picture')
       throw exception

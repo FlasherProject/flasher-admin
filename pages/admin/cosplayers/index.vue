@@ -6,7 +6,7 @@
           <div class="level-item">
             <div class="buttons">
               <b-button
-                :to="{ name: 'admin-categories-create' }"
+                :to="{ name: 'admin-cosplayers-create' }"
                 tag="nuxt-link"
                 type="is-success"
                 icon-left="plus"
@@ -17,7 +17,7 @@
                 :disabled="!checkedRows.length"
                 type="is-danger"
                 icon-left="trash-alt"
-                @click="confirmDeleteSelectedCategories"
+                @click="confirmDeleteSelectedCosplayers"
               >
                 Delete checked
               </b-button>
@@ -33,14 +33,14 @@
               placeholder="Search..."
               type="search"
               icon="search"
-              @input="fetchCategories()"
+              @input="fetchCosplayers()"
             />
           </b-field>
         </div>
       </div>
 
       <b-table
-        :data="categories"
+        :data="cosplayers"
         :loading="loading"
         :total="total"
         :per-page="perPage"
@@ -53,11 +53,12 @@
         paginated
         backend-pagination
         backend-sorting
+        icon-pack="fas"
         checkable
         @page-change="onPageChange"
         @sort="onSort"
       >
-        <template slot-scope="category">
+        <template slot-scope="cosplayer">
           <b-table-column
             field="name"
             label="Name"
@@ -65,11 +66,11 @@
           >
             <nuxt-link
               :to="{
-                name: 'admin-categories-slug',
-                params: { slug: category.row.slug }
+                name: 'admin-cosplayers-slug',
+                params: { slug: cosplayer.row.slug }
               }"
             >
-              {{ category.row.name }}
+              {{ cosplayer.row.name }}
             </nuxt-link>
           </b-table-column>
         </template>
@@ -98,12 +99,13 @@
 </template>
 
 <script lang="ts">
+
 import { Component, Vue } from 'vue-property-decorator'
-import Category from '~/models/category'
+import Cosplayer from '../../../models/cosplayer'
 import { showError, showSuccess } from '~/helpers/toast'
 
 @Component({
-  name: 'CategoriesIndex',
+  name: 'CosplayersIndex',
   filters: {
     /**
          * Filter to truncate string, accepts a length parameter
@@ -115,9 +117,9 @@ import { showError, showSuccess } from '~/helpers/toast'
     }
   }
 })
-export default class CategoriesIndex extends Vue {
-    private categories: Array<Category> = [];
-    private checkedRows: Array<Category> = [];
+export default class CosplayersIndex extends Vue {
+    private cosplayers: Array<Cosplayer> = [];
+    private checkedRows: Array<Cosplayer> = [];
     private total = 0;
     private page = 1;
     perPage = 10;
@@ -129,15 +131,15 @@ export default class CategoriesIndex extends Vue {
     private search = '';
 
     created (): void {
-      this.fetchCategories()
+      this.fetchCosplayers()
     }
 
-    fetchCategories (): void {
+    fetchCosplayers (): void {
       this.loading = true
       const sortOrder = this.sortOrder === 'asc' ? '' : '-'
 
       this.$axios
-        .get('/api/admin/categories', {
+        .get('/api/admin/cosplayers', {
           params: {
             page: this.page,
             sort: sortOrder + this.sortField,
@@ -148,17 +150,17 @@ export default class CategoriesIndex extends Vue {
         .then((res) => {
           this.perPage = res.meta.per_page
           this.total = res.meta.total
-          this.categories = res.data
+          this.cosplayers = res.data
           this.loading = false
         })
         .catch((err) => {
-          this.categories = []
+          this.cosplayers = []
           this.total = 0
           this.loading = false
           showError(
             this.$buefy,
-            'Unable to load categories, maybe you are offline?',
-            this.fetchCategories
+            'Unable to load cosplayers, maybe you are offline?',
+            this.fetchCosplayers
           )
           throw err
         })
@@ -169,7 +171,7 @@ export default class CategoriesIndex extends Vue {
      */
     onPageChange (page: number): void {
       this.page = page
-      this.fetchCategories()
+      this.fetchCosplayers()
     }
 
     /*
@@ -178,38 +180,38 @@ export default class CategoriesIndex extends Vue {
     onSort (field: string, order: string): void {
       this.sortField = field
       this.sortOrder = order
-      this.fetchCategories()
+      this.fetchCosplayers()
     }
 
-    confirmDeleteSelectedCategories (): void {
+    confirmDeleteSelectedCosplayers (): void {
       this.$buefy.dialog.confirm({
-        title: 'Deleting Categories',
+        title: 'Deleting Cosplayers',
         message:
-                'Are you sure you want to <b>delete</b> these categories? This action cannot be undone.',
-        confirmText: 'Delete Categories',
+                'Are you sure you want to <b>delete</b> these cosplayers? This action cannot be undone.',
+        confirmText: 'Delete Cosplayers',
         type: 'is-danger',
         hasIcon: true,
         onConfirm: () => {
-          this.deleteSelectedCategories()
+          this.deleteSelectedCosplayers()
         }
       })
     }
 
     /**
-     * Delete category from slug
+     * Delete cosplayer from slug
      */
-    deleteSelectedCategories (): void {
-      this.checkedRows.forEach((category) => {
+    deleteSelectedCosplayers (): void {
+      this.checkedRows.forEach((cosplayer) => {
         this.$axios
-          .delete(`/api/admin/categories/${category.slug}`)
+          .delete(`/api/admin/cosplayers/${cosplayer.slug}`)
           .then(() => {
-            showSuccess(this.$buefy, 'Categories deleted')
-            this.fetchCategories()
+            showSuccess(this.$buefy, 'Cosplayers deleted')
+            this.fetchCosplayers()
           })
           .catch((err) => {
             showError(
               this.$buefy,
-                        `Unable to delete category <br> <small>${err.message}</small>`
+                        `Unable to delete cosplayer <br> <small>${err.message}</small>`
             )
             throw err
           })

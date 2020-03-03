@@ -16,8 +16,8 @@
       </section>
       <section class="info-tiles">
         <div class="tile is-ancestor has-text-centered">
-          <router-link
-            :to="{ name: 'admin.users.index' }"
+          <nuxt-link
+            :to="{ name: 'admin-users' }"
             class="tile is-parent"
           >
             <article class="tile is-child box">
@@ -28,10 +28,10 @@
                 Users
               </p>
             </article>
-          </router-link>
+          </nuxt-link>
 
-          <router-link
-            :to="{ name: 'admin.albums.index' }"
+          <nuxt-link
+            :to="{ name: 'admin-albums' }"
             class="tile is-parent"
           >
             <article class="tile is-child box">
@@ -42,10 +42,10 @@
                 Albums
               </p>
             </article>
-          </router-link>
+          </nuxt-link>
 
-          <router-link
-            :to="{ name: 'admin.albums.index' }"
+          <nuxt-link
+            :to="{ name: 'admin-albums' }"
             class="tile is-parent"
           >
             <article class="tile is-child box">
@@ -56,10 +56,10 @@
                 Medias
               </p>
             </article>
-          </router-link>
+          </nuxt-link>
 
-          <router-link
-            :to="{ name: 'admin.cosplayers.index' }"
+          <nuxt-link
+            :to="{ name: 'admin-cosplayers' }"
             class="tile is-parent"
           >
             <article class="tile is-child box">
@@ -70,7 +70,7 @@
                 Cosplayers
               </p>
             </article>
-          </router-link>
+          </nuxt-link>
 
           <a class="tile is-parent">
             <article class="tile is-child box">
@@ -85,7 +85,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from '~/node_modules/vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import { showError } from '~/helpers/toast'
 
 @Component({ name: 'dashboard' })

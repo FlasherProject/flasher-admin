@@ -20,15 +20,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop } from 'vue-property-decorator'
-import Buefy from '../../admin/Buefy.vue'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import User from '~/models/user'
 import { showError } from '~/helpers/toast'
 
 @Component({
   name: 'pick-one-user'
 })
-export default class PickOneUser extends Buefy {
+export default class PickOneUser extends Vue {
     @Prop()
     private userId?: number;
 

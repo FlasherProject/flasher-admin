@@ -120,8 +120,8 @@
 </template>
 
 <script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
 import Album from '../../../models/album'
-import { Component, Vue } from '~/node_modules/vue-property-decorator'
 import { showError, showSuccess } from '~/helpers/toast'
 
 @Component({
