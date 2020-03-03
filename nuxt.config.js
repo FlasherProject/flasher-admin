@@ -60,7 +60,16 @@ export default {
    */
   axios: {
     baseURL: 'http://localhost:8000',
-    debug: true
+    debug: false,
+    credentials: true,
+    retry: { retries: 1 },
+    proxy: true,
+    common: {
+      Accept: 'application/json'
+    }
+  },
+  proxy: {
+    '/api': 'http://localhost:8000'
   },
   router: {
     middleware: ['auth']
@@ -68,9 +77,9 @@ export default {
   auth: {
     strategies: {
       'laravel.passport': {
-        url: 'http://localhost:8000/oauth/token',
+        url: '/',
         client_id: '4',
-        client_secret: 'DUpE4yx5EYhqJs10Rneask9cPXsxp5IQw8xKRynZ'
+        client_secret: 'clfa1UzjROYCdJmtBhglPKZfhHF2gixj5VVb9Wwh'
       }
     }
   },
