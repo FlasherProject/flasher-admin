@@ -93,9 +93,9 @@ export default {
   auth: {
     strategies: {
       'laravel.passport': {
-        url: '/',
-        client_id: '4',
-        client_secret: 'clfa1UzjROYCdJmtBhglPKZfhHF2gixj5VVb9Wwh'
+        url: process.env.LARAVEL_PASSPORT_URL,
+        client_id: process.env.LARAVEL_PASSPORT_CLIENT_ID,
+        client_secret: process.env.LARAVEL_PASSPORT_CLIENT_SECRET
       }
     }
   },

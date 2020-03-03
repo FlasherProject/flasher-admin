@@ -11,6 +11,13 @@ services:
     restart: unless-stopped
     networks:
       - nginx-proxy
+    env_file:
+      - .env.docker
+    environment:
+      BASE_URL: ${BASE_URL}
+      LARAVEL_PASSPORT_URL: ${LARAVEL_PASSPORT_URL}
+      LARAVEL_PASSPORT_CLIENT_ID: ${LARAVEL_PASSPORT_CLIENT_ID}
+      LARAVEL_PASSPORT_CLIENT_SECRET: ${LARAVEL_PASSPORT_CLIENT_SECRET}
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=nginx-proxy"
@@ -39,7 +46,6 @@ services:
       - "traefik.http.middlewares.${COMPOSE_PROJECT_NAME}-limit.buffering.memResponseBodyBytes=1000000" # 1 Mb
       - "traefik.http.middlewares.${COMPOSE_PROJECT_NAME}-ratelimit.ratelimit.average=100"
       - "traefik.http.middlewares.${COMPOSE_PROJECT_NAME}-ratelimit.ratelimit.burst=50"
-
 
 networks:
   nginx-proxy:
