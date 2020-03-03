@@ -7,7 +7,7 @@
             <div class="buttons">
               <b-button
                 :to="{ name: 'admin-albums-create' }"
-                tag="router-link"
+                tag="nuxt-link"
                 type="is-success"
                 icon-left="plus"
               >
@@ -59,14 +59,14 @@
       >
         <template slot-scope="album">
           <b-table-column field="title" label="Title" sortable>
-            <router-link
+            <nuxt-link
               :to="{
-                name: 'admin.albums.edit',
+                name: 'admin-albums-slug',
                 params: { slug: album.row.slug }
               }"
             >
               {{ album.row.title }}
-            </router-link>
+            </nuxt-link>
           </b-table-column>
 
           <b-table-column
