@@ -104,7 +104,7 @@ import { showError, showSuccess } from '~/helpers/toast'
   name: 'UsersEdit'
 })
 export default class UsersEdit extends Vue {
-    private user!: User;
+    private user: User|null = null;
     private loading = false;
     protected errors: object = {};
 
