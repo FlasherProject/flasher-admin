@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 export default {
   mode: 'spa',
   /*
@@ -35,7 +37,8 @@ export default {
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
     // Doc : https://typescript.nuxtjs.org/guide/setup.html
-    '@nuxt/typescript-build'
+    '@nuxt/typescript-build',
+    '@nuxtjs/dotenv'
   ],
   /*
    ** Nuxt.js modules
@@ -74,7 +77,7 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: 'http://localhost:8000',
+    baseURL: process.env.REMOTE_API || 'http://localhost:8000',
     debug: false,
     credentials: true,
     retry: { retries: 1 },
@@ -93,11 +96,16 @@ export default {
   auth: {
     strategies: {
       'laravel.passport': {
-        url: process.env.LARAVEL_PASSPORT_URL,
+        url: process.env.REMOTE_API,
+        authorization_endpoint: process.env.REMOTE_API + '/oauth/authorize',
         client_id: process.env.LARAVEL_PASSPORT_CLIENT_ID,
-        client_secret: process.env.LARAVEL_PASSPORT_CLIENT_SECRET
+        client_secret: process.env.LARAVEL_PASSPORT_CLIENT_SECRET,
+        redirect_uri: process.env.LARAVEL_PASSPORT_REDIRECT_URL
       }
     }
+  },
+  dotenv: {
+    /* module options */
   },
   /*
    ** Build configuration
