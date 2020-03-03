@@ -8,5 +8,5 @@ export default class Category implements FilterableById {
   public description!: string | null
   public created_at!: Date
   public updated_at!: Date
-  public cover!: object
+  public cover!: object|null
 }
