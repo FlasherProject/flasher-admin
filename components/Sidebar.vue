@@ -3,7 +3,7 @@
     <b-menu>
       <b-menu-list label="Administration">
         <b-menu-item
-          :to="{ name: 'admin' }"
+          :to="{ name: 'index' }"
           label="Dashboard"
           icon="home"
           tag="nuxt-link"
