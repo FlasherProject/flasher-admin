@@ -8,6 +8,6 @@ RUN sed -i 's/\/_auth\/oauth\//\/admin\/_auth\/oauth\//' node_modules/@nuxtjs/au
 RUN yarn build
 
 FROM nginx:stable-alpine as production-stage
-COPY --from=build-stage /app/dist /usr/share/nginx/html
+COPY --from=build-stage /app/dist /usr/share/nginx/html/admin
 RUN sed -i 's/.*error_page  404.*/error_page 404 =200 \/admin;/' /etc/nginx/conf.d/default.conf
 CMD ["nginx", "-g", "daemon off;"]
