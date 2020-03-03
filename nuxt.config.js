@@ -48,11 +48,26 @@ export default {
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
-    '@nuxtjs/auth'
+    '@nuxtjs/auth',
+    'nuxt-fontawesome'
   ],
   buefy: {
-    defaultIconComponent: 'vue-fontawesome',
-    defaultIconPack: 'fas'
+    materialDesignIcons: false,
+    defaultIconPack: 'fas',
+    defaultIconComponent: 'font-awesome-icon'
+  },
+  fontawesome: {
+    component: 'font-awesome-icon',
+    imports: [
+      {
+        set: '@fortawesome/free-brands-svg-icons',
+        icons: ['fab']
+      },
+      {
+        set: '@fortawesome/free-solid-svg-icons',
+        icons: ['fas']
+      }
+    ]
   },
   /*
    ** Axios module configuration
