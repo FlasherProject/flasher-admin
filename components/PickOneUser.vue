@@ -22,8 +22,8 @@
 <script lang="ts">
 import { Component, Prop } from 'vue-property-decorator'
 import Buefy from '../../admin/Buefy.vue'
-import User from '../../models/user'
-import { showError } from '../../admin/toast'
+import User from '~/models/user'
+import { showError } from '~/helpers/toast'
 
 @Component({
   name: 'pick-one-user'
@@ -50,7 +50,7 @@ export default class PickOneUser extends Buefy {
 
     getFilteredUsers (text: string): void {
       this.loading = true
-      this.axios
+      this.$axios
         .get('/api/admin/users', {
           params: {
             'filter[name]': text
