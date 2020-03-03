@@ -25,7 +25,8 @@
     "types": [
       "@types/node",
       "@nuxt/types",
-      "@nuxtjs/axios"
+      "@nuxtjs/axios",
+      "@types/nuxtjs__auth"
     ],
     "experimentalDecorators": true
   },
