@@ -1,18 +1,22 @@
 <template>
   <section class="section">
-    Login
+    <button v-if="!$auth.loggedIn" @click="login">
+      Login
+    </button>
   </section>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 
-  @Component({ name: 'Login' })
+@Component({ name: 'Login' })
 class Login extends Vue {
-    created (): void {
-      this.$auth.loginWith('laravel.passport')
-    }
+  auth = 'guest'
+
+  login (): void {
+    this.$auth.loginWith('laravel.passport', { config: { headers: { common: { Accept: 'application/json' } } } })
   }
+}
 
 export default Login
 </script>
