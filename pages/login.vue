@@ -14,7 +14,7 @@ class Login extends Vue {
   auth = 'guest'
 
   login (): void {
-    this.$auth.loginWith('laravel.passport', { config: { headers: { common: { Accept: 'application/json' } } } })
+    this.$auth.loginWith('oauth', { config: { headers: { common: { Accept: 'application/json' } } } })
   }
 }
 

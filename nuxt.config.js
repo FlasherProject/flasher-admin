@@ -95,12 +95,20 @@ export default {
   },
   auth: {
     strategies: {
-      'laravel.passport': {
+      oauth: {
+        _scheme: 'oauth2',
+        authorization_endpoint: `${process.env.REMOTE_API}/oauth/authorize`,
+        access_token_endpoint: `${process.env.REMOTE_API}/oauth/token`,
+        token_key: 'access_token',
+        token_type: 'Bearer',
+        response_type: 'code',
+        grant_type: 'authorization_code',
+        scope: '*',
         url: process.env.REMOTE_API,
-        authorization_endpoint: process.env.REMOTE_API + '/oauth/authorize',
         client_id: process.env.LARAVEL_PASSPORT_CLIENT_ID,
         client_secret: process.env.LARAVEL_PASSPORT_CLIENT_SECRET,
-        redirect_uri: process.env.LARAVEL_PASSPORT_REDIRECT_URL
+        redirect_uri: process.env.LARAVEL_PASSPORT_REDIRECT_URL,
+        userinfo_endpoint: false
       }
     }
   },
