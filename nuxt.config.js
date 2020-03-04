@@ -79,7 +79,7 @@ export default {
   axios: {
     baseURL: process.env.REMOTE_API || 'http://localhost:8000',
     debug: false,
-    credentials: true,
+    credentials: false,
     retry: { retries: 1 },
     proxy: true,
     common: {
