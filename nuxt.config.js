@@ -96,6 +96,12 @@ export default {
   auth: {
     strategies: {
       'laravel.passport': {
+        url: process.env.REMOTE_API,
+        client_id: process.env.LARAVEL_PASSPORT_CLIENT_ID,
+        client_secret: process.env.LARAVEL_PASSPORT_CLIENT_SECRET,
+        redirect_uri: process.env.LARAVEL_PASSPORT_REDIRECT_URL
+      },
+      'laravel.passport_ok': {
         url: 'http://localhost:8000',
         client_id: '10',
         client_secret: 'hAg65WE8jCBOfEIt6ESG845lW3iNMEcTKlgs5hdh',
