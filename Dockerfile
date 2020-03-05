@@ -3,8 +3,6 @@ WORKDIR /app
 COPY package*.json ./
 RUN yarn install
 COPY . .
-# Fix harcoded path
-RUN sed -i 's/\/_auth\/oauth\//\/admin\/_auth\/oauth\//' node_modules/@nuxtjs/auth/lib/providers/_utils.js
 RUN yarn build
 
 FROM nginx:stable-alpine as production-stage
