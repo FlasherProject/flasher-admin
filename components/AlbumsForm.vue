@@ -351,7 +351,7 @@ class AlbumsForm extends Vue {
       }
       showSuccess(this.$buefy, 'Album successfully created')
       await this.$router.push({
-        name: 'albums-edit',
+        name: 'albums-slug',
         params: { slug: this.album.slug }
       })
     } catch (exception) {
