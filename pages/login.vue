@@ -1,8 +1,6 @@
 <template>
   <section class="section">
-    <button v-if="!$auth.loggedIn" @click="login">
-      Login
-    </button>
+
   </section>
 </template>
 
@@ -13,7 +11,7 @@ import { Component, Vue } from 'vue-property-decorator'
 class Login extends Vue {
   auth = 'guest'
 
-  login (): void {
+  created (): void {
     this.$auth.loginWith('laravel.passport')
   }
 }
