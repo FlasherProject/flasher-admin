@@ -306,14 +306,13 @@ class AlbumsForm extends Vue {
     }
   }
 
-  sendingEvent (_file: File, _xhr: XMLHttpRequest, formData: FormData): void {
-    if (this.album === undefined) {
-      throw new DOMException('Unable to send media with undefined album.')
-    }
-    if (!this.album.slug) {
-      throw new DOMException('album slug is null')
+  sendingEvent (_file: File, xhr: XMLHttpRequest, formData: FormData): void {
+    if (!this.album?.slug) {
+      throw new Error('album or album slug is undefined')
     }
     formData.append('album_slug', this.album.slug as string)
+    const token = this.$auth.getToken('laravel.passport')
+    xhr.setRequestHeader('Authorization', 'Bearer ' + token)
   }
 
   async updateAlbum (): Promise<void> {
