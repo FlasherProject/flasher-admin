@@ -11,7 +11,7 @@ env:
 
 jobs:
 
-  lint:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Install Node.js
@@ -32,3 +32,9 @@ jobs:
       - run: yarn install --frozen-lockfile
       - run: yarn lint
       - run: yarn build
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+      - run: echo wip
