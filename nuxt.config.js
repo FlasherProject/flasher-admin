@@ -90,7 +90,6 @@ export default {
     '/api': 'http://localhost:8000'
   },
   router: {
-    // base: '/admin',
     middleware: ['auth']
   },
   auth: {
@@ -100,27 +99,6 @@ export default {
         client_id: process.env.LARAVEL_PASSPORT_CLIENT_ID,
         client_secret: process.env.LARAVEL_PASSPORT_CLIENT_SECRET,
         redirect_uri: process.env.LARAVEL_PASSPORT_REDIRECT_URL
-      },
-      'laravel.passport_ok': {
-        url: 'http://localhost:8000',
-        client_id: '10',
-        client_secret: 'hAg65WE8jCBOfEIt6ESG845lW3iNMEcTKlgs5hdh',
-        redirect_uri: 'http://localhost:3000/login'
-      },
-      oauth: {
-        _scheme: 'oauth2',
-        authorization_endpoint: `${process.env.REMOTE_API}/oauth/authorize`,
-        // access_token_endpoint: `${process.env.REMOTE_API}/oauth/token`,
-        token_key: 'access_token',
-        token_type: 'Bearer',
-        response_type: 'code',
-        grant_type: 'authorization_code',
-        scope: '*',
-        url: process.env.REMOTE_API,
-        client_id: process.env.LARAVEL_PASSPORT_CLIENT_ID,
-        client_secret: process.env.LARAVEL_PASSPORT_CLIENT_SECRET,
-        redirect_uri: process.env.LARAVEL_PASSPORT_REDIRECT_URL,
-        userinfo_endpoint: false
       }
     }
   },
