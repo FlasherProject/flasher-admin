@@ -10,7 +10,9 @@ class Login extends Vue {
   auth = 'guest'
 
   created (): void {
-    this.$auth.loginWith('laravel.passport')
+    if (!this.$auth.loggedIn) {
+      this.$auth.loginWith('laravel.passport')
+    }
   }
 }
 
