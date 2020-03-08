@@ -1,6 +1,7 @@
 version: '3'
 services:
   frontend:
+    image: docker.pkg.github.com/agravelot/flasher-admin/node:${CI_COMMIT_SHORT_SHA:-latest}
     build:
       context: .
       dockerfile: Dockerfile
