@@ -10,8 +10,6 @@ services:
     restart: unless-stopped
     networks:
       - nginx-proxy
-    env_file:
-      - .env.docker
     environment:
       NUXT_HOST: "0.0.0.0"
       NUXT_PORT: 80
