@@ -93,6 +93,12 @@ export default {
     middleware: ['auth']
   },
   auth: {
+    redirect: {
+      login: '/login',
+      logout: '/login',
+      callback: '/',
+      home: '/'
+    },
     strategies: {
       'laravel.passport': {
         url: process.env.REMOTE_API,
