@@ -21,6 +21,9 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+
+      - uses: actions/checkout@v2
+
       - name: Define env
         run: |
           echo "::set-env name=CI_COMMIT_REF_NAME::$(echo -n $GITHUB_REF | cut -d/ -f3-)"
@@ -32,5 +35,57 @@ jobs:
           login-server: docker.pkg.github.com
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Update docker-compose version
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/download/1.25.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+          docker-compose version
+          docker -v
 
-      - run: echo wip
+        # STAGING
+      - name: Deploy to staging
+        if: github.ref == 'refs/heads/develop'
+        env:
+          CI_COMMIT_SHORT_SHA: ${{ env.CI_COMMIT_SHORT_SHA }}
+          CI_COMMIT_REF_NAME: ${{ env.CI_COMMIT_REF_NAME }}
+          CI_REGISTRY_USER: ${{ secrets.CI_REGISTRY_USER }}
+          CI_REGISTRY_PASSWORD: ${{ secrets.CI_REGISTRY_PASSWORD }}
+          CI_DEPLOY_SSH_PORT: ${{ secrets.CI_STAGING_DEPLOY_SSH_PORT }}
+          CI_DEPLOY_URI: ${{ secrets.CI_STAGING_DEPLOY_URI }}
+          SSH_PRIVATE_KEY: ${{ secrets.CI_STAGING_SSH_PRIVATE_KEY }}
+          SSH_USER: ${{ secrets.CI_STAGING_SSH_USER }}
+          REMOTE: ${{ secrets.CI_STAGING_SSH_USER }}@${{ secrets.CI_STAGING_DEPLOY_URI }}
+          APP_URL: ${{ secrets.APP_URL_STAGING }}
+          APP_URI: ${{ secrets.APP_URI_STAGING }}
+          APP_NAME: ${{ secrets.APP_NAME_STAGING }}
+          APP_ENV: "staging"
+        run: |
+          eval $(ssh-agent -s)
+          mkdir -p ~/.ssh
+          echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+          chmod +x docker/*.sh
+          bash -c 'cd docker/ && ./deploy.sh staging'
+
+      # PRODUCTION
+      - name: Deploy to production
+        if: github.ref == 'refs/heads/master'
+        env:
+          CI_COMMIT_SHORT_SHA: ${{ env.CI_COMMIT_SHORT_SHA }}
+          CI_COMMIT_REF_NAME: ${{ env.CI_COMMIT_REF_NAME }}
+          CI_REGISTRY_USER: ${{ secrets.CI_REGISTRY_USER }}
+          CI_REGISTRY_PASSWORD: ${{ secrets.CI_REGISTRY_PASSWORD }}
+          CI_DEPLOY_SSH_PORT: ${{ secrets.CI_PRODUCTION_DEPLOY_SSH_PORT }}
+          CI_DEPLOY_URI: ${{ secrets.CI_PRODUCTION_DEPLOY_URI }}
+          SSH_PRIVATE_KEY: ${{ secrets.CI_PRODUCTION_SSH_PRIVATE_KEY }}
+          SSH_USER: ${{ secrets.CI_PRODUCTION_SSH_USER }}
+          REMOTE: ${{ secrets.CI_PRODUCTION_SSH_USER }}@${{ secrets.CI_PRODUCTION_DEPLOY_URI }}
+          APP_URL: ${{ secrets.APP_URL_PRODUCTION }}
+          APP_URI: ${{ secrets.APP_URI_PRODUCTION }}
+          APP_NAME: ${{ secrets.APP_NAME_PRODUCTION }}
+          APP_ENV: "production"
+        run: |
+          eval $(ssh-agent -s)
+          mkdir -p ~/.ssh
+          echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+          chmod +x docker/*.sh
+          bash -c 'cd docker/ && ./deploy.sh production'
