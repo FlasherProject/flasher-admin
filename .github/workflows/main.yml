@@ -26,4 +26,11 @@ jobs:
           echo "::set-env name=CI_COMMIT_REF_NAME::$(echo -n $GITHUB_REF | cut -d/ -f3-)"
           echo "::set-env name=CI_COMMIT_SHORT_SHA::$(echo -n $GITHUB_SHA | cut -c 1-6)"
 
+      - name: Login to Github repository
+        uses: azure/docker-login@v1
+        with:
+          login-server: docker.pkg.github.com
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - run: echo wip
