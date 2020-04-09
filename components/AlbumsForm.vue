@@ -129,6 +129,7 @@
             </form>
           </b-tab-item>
           <b-tab-item v-if="!isCreating" label="Pictures" icon="images">
+            <album-media-uploader model-class="aze" model-id="1" endpoint="" collection="" />
             <vue-dropzone
               id="dropzone"
               ref="myVueDropzone"
@@ -199,6 +200,7 @@ import { showError, showSuccess } from '~/helpers/toast'
 import FilterableById from '~/models/interfaces/filterableById'
 import { debounce } from '~/helpers/debounce'
 import ShareAlbum from '~/components/ShareAlbum.vue'
+import AlbumMediaUploader from '~/components/AlbumMediaUploader.vue'
 
 interface AlbumErrorsInterface {
   title?: object
@@ -216,7 +218,8 @@ interface AlbumErrorsInterface {
     vueDropzone: vue2Dropzone,
     quillEditor,
     ShareAlbum,
-    draggable
+    draggable,
+    AlbumMediaUploader
   }
 })
 class AlbumsForm extends Vue {

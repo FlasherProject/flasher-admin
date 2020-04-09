@@ -1,9 +1,9 @@
 <template>
   <div>
-    <section class="main-content columns">
+    <section class="section">
       <sidebar />
 
-      <div class="container column is-10">
+      <div class="container" style="padding-left: 40px;">
         <nuxt />
       </div>
     </section>

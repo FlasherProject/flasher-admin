@@ -93,6 +93,7 @@ export default {
     middleware: ['auth']
   },
   auth: {
+    rewriteRedirects: false,
     redirect: {
       login: '/login',
       logout: '/login',
