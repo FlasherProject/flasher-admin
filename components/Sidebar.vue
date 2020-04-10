@@ -91,15 +91,14 @@ export default Sidebar
 <style lang="scss">
   @media screen and (max-width: 769px) {
     .menu {
-      box-shadow: -1px -7px 8px 0px rgba(0,0,0,0.25);
+      box-shadow: -1px -7px 8px 0px rgba(0, 0, 0, 0.25);
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
       z-index: 10;
       background-color: white;
-      list-style-type: none;
-      margin: 0;
+      margin: 0 9px 0 0;
       padding: 0;
       overflow: auto;
       white-space: nowrap;
@@ -107,20 +106,22 @@ export default Sidebar
     .menu-list {
       height: 64px;
       display: inline-block;
-      list-style-type: none;
       margin: 0;
       padding: 0;
-      overflow: hidden;
+
       li {
         display: inline-block;
-        a span {
-          display: block;
-          text-align: center;
-          margin: 4px;
-          svg {
+
+        a {
+          span {
             display: block;
             text-align: center;
             margin: 4px;
+
+            svg {
+              display: flex;
+              margin: 0 auto;
+            }
           }
         }
       }
