@@ -116,12 +116,7 @@ export default Sidebar
           span {
             display: block;
             text-align: center;
-            margin: 4px;
-
-            svg {
-              display: flex;
-              margin: 0 auto;
-            }
+            margin: 4px auto;
           }
         }
       }
