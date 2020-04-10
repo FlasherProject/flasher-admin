@@ -1,10 +1,14 @@
 <template>
   <div>
-    <section class="section">
-      <sidebar />
+    <section class="section columns">
+      <div class="column is-3">
+        <sidebar />
+      </div>
 
-      <div class="container" style="padding-left: 40px;">
-        <nuxt />
+      <div class="column">
+        <div class="container">
+          <nuxt />
+        </div>
       </div>
     </section>
   </div>
