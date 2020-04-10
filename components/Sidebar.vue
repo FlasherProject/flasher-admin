@@ -77,7 +77,7 @@
               tag="nuxt-link"
             />
             <b-menu-item
-              :href="process.env.REMOTE_API"
+              href="https://jkanda.fr"
               label="Return to website"
               icon="chevron-circle-left"
               tag="a"
