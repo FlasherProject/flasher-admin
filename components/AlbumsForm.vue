@@ -6,7 +6,7 @@
 
     <div class="card">
       <div class="card-content">
-        <b-tabs type="is-boxed" size="is-medium" class="block">
+        <b-tabs type="is-toggle-rounded" class="block">
           <b-tab-item label="Album" icon="info">
             <form @submit.prevent="updateOrCreateAlbum">
               <b-field
