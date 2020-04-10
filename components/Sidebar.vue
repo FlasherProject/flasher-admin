@@ -4,8 +4,8 @@
       :fullheight="true"
       position="absolute"
       mobile="fullwidth"
-      :expand-on-hover="true"
-      :reduce="true"
+      :expand-on-hover="false"
+      :reduce="false"
       :open="true"
     >
       <div class="p-1">
