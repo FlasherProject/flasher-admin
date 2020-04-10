@@ -5,7 +5,7 @@
         <sidebar />
       </div>
 
-      <div class="column">
+      <div class="column has-margin-bottom-tablet">
         <div class="container">
           <nuxt />
         </div>
@@ -23,3 +23,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  .has-margin-bottom-tablet {
+    @media screen and (max-width: 769px) {
+      margin-bottom: 64px;
+    }
+  }
+</style>
