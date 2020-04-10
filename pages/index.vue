@@ -131,3 +131,9 @@ class Dashboard extends Vue {
 
 export default Dashboard
 </script>
+
+<style lang="scss">
+  .has-margin-bottom-sm {
+    margin-bottom: .5em;
+  }
+</style>
