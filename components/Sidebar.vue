@@ -76,6 +76,12 @@
               icon="cog"
               tag="nuxt-link"
             />
+            <b-menu-item
+              :href="process.env.REMOTE_API"
+              label="Return to website"
+              icon="chevron-circle-left"
+              tag="a"
+            />
           </b-menu-list>
         </b-menu>
       </div>
