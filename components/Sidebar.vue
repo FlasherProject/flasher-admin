@@ -91,6 +91,7 @@ export default Sidebar
 <style lang="scss">
   @media screen and (max-width: 769px) {
     .menu {
+      box-shadow: -1px -7px 8px 0px rgba(0,0,0,0.25);
       position: fixed;
       bottom: 0;
       left: 0;
