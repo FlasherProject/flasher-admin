@@ -96,7 +96,7 @@ export default Sidebar
       bottom: 0;
       left: 0;
       width: 100%;
-      z-index: 10;
+      z-index: 15;
       background-color: white;
       margin: 0 9px 0 0;
       padding: 0;
