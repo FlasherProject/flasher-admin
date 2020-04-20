@@ -314,7 +314,7 @@ class AlbumsForm extends Vue {
       throw new Error('album or album slug is undefined')
     }
     formData.append('album_slug', this.album.slug as string)
-    xhr.setRequestHeader('Authorization', this.$auth.getToken('laravel.passport'))
+    xhr.setRequestHeader('Authorization', this.$auth.getToken('keycloak'))
   }
 
   async updateAlbum (): Promise<void> {
