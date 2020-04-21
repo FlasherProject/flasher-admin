@@ -107,7 +107,7 @@ export default {
         client_secret: process.env.LARAVEL_PASSPORT_CLIENT_SECRET,
         redirect_uri: process.env.LARAVEL_PASSPORT_REDIRECT_URL
       },
-      keycloak: {
+      keycloakOld: {
         _scheme: 'oauth2',
         userinfo_endpoint: false,
         token_type: 'Bearer',
@@ -117,8 +117,31 @@ export default {
         authorization_endpoint: 'http://keycloak.localhost/auth/realms/jkanda/protocol/openid-connect/auth',
         access_token_endpoint: 'http://keycloak.localhost/auth/realms/jkanda/protocol/openid-connect/token',
         client_id: 'flasher',
-        client_secret: '7a96a0a6-435d-487a-82bf-eb0625b20404'
-      }
+        client_secret: 'd2b6ec0a-f9ae-4b87-9432-7dbf4aed0e00'
+      },
+      keycloak: {
+        _scheme: 'oauth2',
+        endpoints: {
+          authorization: 'http://keycloak.localhost/auth/realms/jkanda/protocol/openid-connect/auth',
+          token: 'http://keycloak.localhost/auth/realms/jkanda/protocol/openid-connect/token',
+        },
+        token: {
+          property: 'access_token',
+          type: 'Bearer',
+          maxAge: 1800
+        },
+        refreshToken: {
+          property: 'refresh_token',
+          maxAge: 60 * 60 * 24 * 30
+        },
+        responseType: 'code',
+        grantType: 'authorization_code',
+        //accessType: undefined,
+        //redirectUri: undefined,
+        clientId: 'flasher',
+        clientSecret: 'd2b6ec0a-f9ae-4b87-9432-7dbf4aed0e00',
+        // scope: ['openid', 'profile', 'email'],
+      },
     }
   },
   dotenv: {
