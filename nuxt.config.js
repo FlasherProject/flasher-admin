@@ -51,7 +51,7 @@ export default {
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
-    '@nuxtjs/auth',
+    '@nuxtjs/auth-next',
     'nuxt-fontawesome'
   ],
   buefy: {
@@ -100,14 +100,8 @@ export default {
       home: '/'
     },
     strategies: {
-      'laravel.passport': {
-        url: process.env.REMOTE_API,
-        client_id: process.env.LARAVEL_PASSPORT_CLIENT_ID,
-        client_secret: process.env.LARAVEL_PASSPORT_CLIENT_SECRET,
-        redirect_uri: process.env.LARAVEL_PASSPORT_REDIRECT_URL
-      },
       keycloak: {
-        _scheme: 'oauth2',
+        scheme: 'oauth2',
         endpoints: {
           authorization: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/auth`,
           token: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/token`,

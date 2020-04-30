@@ -17,7 +17,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.12.1",
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
     "@fortawesome/vue-fontawesome": "^0.1.9",
-    "@nuxtjs/auth": "nuxt-community/auth-module#dev",
+    "@nuxtjs/auth-next": "^5.0.0-1588183208.61fb4dc",
     "@nuxtjs/axios": "^5.9.5",
     "@nuxtjs/dotenv": "^1.4.0",
     "@nuxtjs/eslint-config-typescript": "^1.0.2",
