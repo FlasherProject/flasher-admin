@@ -18,17 +18,6 @@
             />
           </b-field>
 
-          <b-field
-            :type="errors.message ? 'is-danger' : ''"
-            :message="errors.message ? errors.message[0] : null"
-            label="Message"
-          >
-            <b-input
-              v-model="invitation.message"
-              type="textarea"
-            />
-          </b-field>
-
           <pick-one-cosplayer
             :cosplayer-id.sync="invitation.cosplayer_id"
             :errors="errors"
