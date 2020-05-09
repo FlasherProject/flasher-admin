@@ -99,10 +99,6 @@ class Dashboard extends Vue {
   username: string | null = null
 
   created (): void {
-    if (!this.$auth.loggedIn) {
-      this.$auth.login('keycloak')
-    }
-
     this.fetchDashboard()
   }
 
