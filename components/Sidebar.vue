@@ -74,6 +74,12 @@
           icon="chevron-circle-left"
           tag="a"
         />
+        <b-menu-item
+          v-if="$nuxt.$auth.loggedIn"
+          @click="$nuxt.$auth.logout()"
+          label="Logout"
+          icon="sign-out-alt"
+        />
       </b-menu-list>
     </b-menu>
   </div>

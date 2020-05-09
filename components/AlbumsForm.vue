@@ -258,11 +258,6 @@ class AlbumsForm extends Vue {
     parallelChunkUploads: false,
     acceptedFiles: 'image/*',
     dictDefaultMessage: "<i class='fas fa-images'></i> Upload"
-    // headers: {
-    //     "X-CSRF-Token": (<HTMLMetaElement>document.head.querySelector(
-    //         'meta[name="csrf-token"]'
-    //     ))?.content
-    // }
   }
 
   dragOptions: object = {
@@ -314,7 +309,7 @@ class AlbumsForm extends Vue {
       throw new Error('album or album slug is undefined')
     }
     formData.append('album_slug', this.album.slug as string)
-    xhr.setRequestHeader('Authorization', this.$auth.getToken('laravel.passport'))
+    xhr.setRequestHeader('Authorization', this.$auth.token.get())
   }
 
   async updateAlbum (): Promise<void> {
