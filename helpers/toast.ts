@@ -1,8 +1,8 @@
-import { SnackbarConfig } from 'buefy/types/components'
+import { BSnackbarConfig } from 'buefy/types/components'
 import { BuefyNamespace } from 'buefy/types'
 
 export function showSuccess (buefy: BuefyNamespace, message: string): void {
-  const snackBarConfig: SnackbarConfig = {
+  const snackBarConfig: BSnackbarConfig = {
     message,
     type: 'is-success',
     position: 'is-bottom-right',
@@ -16,7 +16,7 @@ export function showError (
   message: string,
   onActionCallback?: () => void
 ): void {
-  const snackBarConfig: SnackbarConfig = {
+  const snackBarConfig: BSnackbarConfig = {
     message,
     type: 'is-danger',
     position: 'is-bottom-right',
