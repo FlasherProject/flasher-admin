@@ -120,6 +120,7 @@ export default {
         grantType: 'authorization_code',
         clientId:  process.env.KEYCLOAK_CLIENT_ID,
         scope: ['openid', 'admin'],
+        codeChallengeMethod: 'S256',
       }
     }
   },
