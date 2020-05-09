@@ -15,8 +15,9 @@ services:
       NUXT_PORT: 80
       BASE_URL: ${BASE_URL}
       REMOTE_API: ${REMOTE_API}
-      LARAVEL_PASSPORT_CLIENT_ID: ${LARAVEL_PASSPORT_CLIENT_ID}
-      LARAVEL_PASSPORT_CLIENT_SECRET: ${LARAVEL_PASSPORT_CLIENT_SECRET}
+      KEYCLOAK_HOST: ${KEYCLOAK_HOST}
+      KEYCLOAK_REALM: ${KEYCLOAK_REALM}
+      KEYCLOAK_CLIENT_ID: ${KEYCLOAK_CLIENT_ID}
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=nginx-proxy"
