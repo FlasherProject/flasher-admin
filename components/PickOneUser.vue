@@ -1,19 +1,19 @@
 <template>
   <b-field
     label="Select user"
-    :type="errors.user_id ? 'is-danger' : ''"
-    :message="errors.user_id ? errors.user_id[0] : null"
+    :type="errors.sso_id ? 'is-danger' : ''"
+    :message="errors.sso_id ? errors.sso_id[0] : null"
   >
     <b-autocomplete
       :data="filteredUsers"
       :loading="loading"
-      placeholder="User name"
-      field="name"
+      placeholder="Search by username or email"
+      field="username"
       @typing="getFilteredUsers"
       @select="selected"
     >
       <template slot-scope="props">
-        {{ props.option.name }}
+        {{ props.option.username }} - {{ props.option.email }}
       </template>
     </b-autocomplete>
   </b-field>
@@ -52,7 +52,7 @@ export default class PickOneUser extends Vue {
       this.$axios
         .get('/api/admin/users', {
           params: {
-            'filter[name]': text
+            search: text
           }
         })
         .then(res => res.data)
