@@ -105,6 +105,7 @@ export default {
         endpoints: {
           authorization: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/auth`,
           token: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/token`,
+          logout: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/logout?redirect_uri=` + encodeURIComponent(String(process.env.REMOTE_API))
         },
         token: {
           property: 'access_token',
@@ -118,9 +119,9 @@ export default {
         },
         responseType: 'code',
         grantType: 'authorization_code',
-        clientId:  process.env.KEYCLOAK_CLIENT_ID,
+        clientId: process.env.KEYCLOAK_CLIENT_ID,
         scope: ['openid', 'admin'],
-        codeChallengeMethod: 'S256',
+        codeChallengeMethod: 'S256'
       }
     }
   },
