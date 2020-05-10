@@ -34,7 +34,6 @@
           tag="nuxt-link"
         />
         <b-menu-item
-          v-if="false"
           :to="{ name: 'users' }"
           label="Users"
           icon="user"
