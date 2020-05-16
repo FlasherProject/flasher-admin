@@ -51,7 +51,7 @@ export default {
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
-    '@nuxtjs/auth',
+    '@nuxtjs/auth-next',
     'nuxt-fontawesome'
   ],
   buefy: {
@@ -100,11 +100,28 @@ export default {
       home: '/'
     },
     strategies: {
-      'laravel.passport': {
-        url: process.env.REMOTE_API,
-        client_id: process.env.LARAVEL_PASSPORT_CLIENT_ID,
-        client_secret: process.env.LARAVEL_PASSPORT_CLIENT_SECRET,
-        redirect_uri: process.env.LARAVEL_PASSPORT_REDIRECT_URL
+      keycloak: {
+        scheme: 'oauth2',
+        endpoints: {
+          authorization: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/auth`,
+          token: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/token`,
+          logout: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/logout?redirect_uri=` + encodeURIComponent(String(process.env.REMOTE_API))
+        },
+        token: {
+          property: 'access_token',
+          type: 'Bearer',
+          name: 'Authorization',
+          maxAge: 1800
+        },
+        refreshToken: {
+          property: 'refresh_token',
+          maxAge: 60 * 60 * 24 * 30
+        },
+        responseType: 'code',
+        grantType: 'authorization_code',
+        clientId: process.env.KEYCLOAK_CLIENT_ID,
+        scope: ['openid', 'admin'],
+        codeChallengeMethod: 'S256'
       }
     }
   },

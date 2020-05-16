@@ -11,7 +11,7 @@ class Login extends Vue {
 
   created (): void {
     if (!this.$auth.loggedIn) {
-      this.$auth.loginWith('laravel.passport')
+      this.$auth.loginWith('keycloak')
     }
   }
 }

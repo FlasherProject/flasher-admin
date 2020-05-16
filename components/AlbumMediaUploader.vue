@@ -53,7 +53,7 @@ class AlbumMediaUploader extends Vue {
       autoRetry: true,
       retryDelays: [0, 1000, 3000, 5000],
       headers: {
-        authorization: this.$nuxt.$auth.getToken('laravel.passport')
+        authorization: this.$auth.token.get()
       }
     })
 

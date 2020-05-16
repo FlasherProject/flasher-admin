@@ -70,8 +70,8 @@
         </div>
         <div class="column">
           <b-field
-            :type="errors.user_id ? 'is-danger' : ''"
-            :message="errors.user_id ? errors.user_id[0] : null"
+            :type="errors.sso_id ? 'is-danger' : ''"
+            :message="errors.sso_id ? errors.sso_id[0] : null"
             label="Linked user"
           >
             <div
@@ -82,25 +82,14 @@
                 <div class="content">
                   <p>
                     <strong>{{
-                      cosplayer.user.name
+                      cosplayer.user.username
                     }}</strong>
                     <br>
-                    Role : {{ cosplayer.user.role }}
+                    Email : {{ cosplayer.user.email }}
                   </p>
                 </div>
               </div>
               <div class="media-right">
-                <b-button
-                  :to="{
-                    name: 'users-id',
-                    params: { id: cosplayer.user.id }
-                  }"
-                  tag="nuxt-link"
-                  type="is-text"
-                  size="is-small"
-                >
-                  Update
-                </b-button>
                 <button
                   class="delete"
                   @click="cosplayer.user = null"
@@ -165,9 +154,7 @@ export default class CosplayersEdit extends Vue {
     async updateCosplayer (): Promise<void> {
       try {
         this.loading = true
-        const formData: FormData = await this.cosplayerToFormData(
-          this.cosplayer
-        )
+        const formData: FormData = await this.cosplayerToFormData(this.cosplayer)
         const res = await this.$axios.post(
                 `/api/admin/cosplayers/${this.$route.params.slug}`,
                 formData,
@@ -241,7 +228,7 @@ export default class CosplayersEdit extends Vue {
         formData.append('description', cosplayer.description)
       }
       if (this.cosplayer.user && this.cosplayer.user.id) {
-        formData.append('user_id', String(cosplayer.user?.id))
+        formData.append('sso_id', String(cosplayer.user?.id))
       }
       if (cosplayer.avatar) {
         formData.append('avatar', cosplayer.avatar)
