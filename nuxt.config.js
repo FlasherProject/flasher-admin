@@ -120,7 +120,7 @@ export default {
         responseType: 'code',
         grantType: 'authorization_code',
         clientId: process.env.KEYCLOAK_CLIENT_ID,
-        scope: ['openid', 'admin'],
+        scope: ['openid', 'profile', 'email'],
         codeChallengeMethod: 'S256'
       }
     }
