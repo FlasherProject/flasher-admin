@@ -20,13 +20,13 @@ jobs:
           sudo chmod +x /usr/local/bin/docker-compose
           docker-compose version
           docker -v
-      
-      - name: Login to Github repository
+
+      - name: Login to GitLab repository
         uses: azure/docker-login@v1
         with:
-          login-server: docker.pkg.github.com
-          username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          login-server: registry.gitlab.com
+          username: ${{ secrets.CI_REGISTRY_USER }}
+          password: ${{ secrets.CI_REGISTRY_PASSWORD }}
 
       - run: docker-compose build
       - run: docker-compose push
