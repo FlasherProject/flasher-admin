@@ -38,7 +38,7 @@ export default {
     '@nuxtjs/eslint-module',
     // Doc : https://typescript.nuxtjs.org/guide/setup.html
     '@nuxt/typescript-build',
-    ['@nuxtjs/dotenv', { systemvars: true }]
+    '@nuxtjs/dotenv'
   ],
   /*
    ** Nuxt.js modules
@@ -77,7 +77,7 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: process.env.removeApi,
+    baseURL: process.env.REMOTE_API,
     debug: false,
     credentials: false,
     retry: { retries: 1 },
@@ -86,26 +86,24 @@ export default {
       Accept: 'application/json'
     }
   },
-  proxy: {
-    '/api': 'http://localhost:8000'
-  },
   router: {
+    base: '/admin/',
     middleware: ['auth']
   },
   auth: {
     redirect: {
       login: '/login',
       logout: '/login',
-      callback: '/',
-      home: '/'
+      callback: '/admin/',
+      home: '/admin/'
     },
     strategies: {
       keycloak: {
         scheme: 'oauth2',
         endpoints: {
-          authorization: `${process.env.keycloakHost}/auth/realms/${process.env.keycloakRealm}/protocol/openid-connect/auth`,
-          token: `${process.env.keycloakHost}/auth/realms/${process.env.keycloakRealm}/protocol/openid-connect/token`,
-          logout: `${process.env.keycloakHost}/auth/realms/${process.env.keycloakRealm}/protocol/openid-connect/logout?redirect_uri=` + encodeURIComponent(String(process.env.REMOTE_API))
+          authorization: `${process.env.KEYCLOAK_REMOTE_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/auth`,
+          token: `${process.env.KEYCLOAK_REMOTE_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/token`,
+          logout: `${process.env.KEYCLOAK_REMOTE_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/logout?redirect_uri=` + encodeURIComponent(String(process.env.REMOTE_API))
         },
         token: {
           property: 'access_token',
@@ -119,18 +117,14 @@ export default {
         },
         responseType: 'code',
         grantType: 'authorization_code',
-        clientId: process.env.keycloakClientId,
+        clientId: process.env.KEYCLOAK_CLIENT_ID,
         scope: ['openid', 'profile', 'email'],
-        codeChallengeMethod: 'S256'
+        codeChallengeMethod: 'S256',
+        logoutRedirectUri: '/'
       }
     }
   },
-  env: {
-    remoteApi: process.env.REMOTE_API || 'http://localhost:8000',
-    keycloakHost: process.env.KEYCLOAK_HOST,
-    keycloakRealm: process.env.KEYCLOAK_REALM,
-    keycloakClientId: process.env.KEYCLOAK_CLIENT_ID,
-  },
+  env: {},
   dotenv: {
     /* module options */
   },
