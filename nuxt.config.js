@@ -87,15 +87,14 @@ export default {
     }
   },
   router: {
-    base: '/admin/',
     middleware: ['auth']
   },
   auth: {
     redirect: {
       login: '/login',
       logout: '/login',
-      callback: '/admin/',
-      home: '/admin/'
+      callback: '/',
+      home: '/'
     },
     strategies: {
       keycloak: {
