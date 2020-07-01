@@ -77,7 +77,7 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: process.env.remoteApi,
+    baseURL: process.env.REMOTE_API,
     debug: false,
     credentials: false,
     retry: { retries: 1 },

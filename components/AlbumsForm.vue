@@ -241,7 +241,7 @@ class AlbumsForm extends Vue {
   }
 
   dropzoneOptions: DropzoneOptions = {
-    url: process.env.REMOTE_API + '/api/admin/album-pictures',
+    url: process.env.remoteApi + '/api/admin/album-pictures',
     thumbnailWidth: 200,
     addRemoveLinks: true,
     parallelUploads: 5,
