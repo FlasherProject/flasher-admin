@@ -53,7 +53,7 @@ class AlbumMediaUploader extends Vue {
       autoRetry: true,
       retryDelays: [0, 1000, 3000, 5000],
       headers: {
-        authorization: this.$auth.token.get()
+        authorization: this.$auth.strategy.token.get()
       }
     })
 

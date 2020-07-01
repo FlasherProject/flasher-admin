@@ -309,7 +309,7 @@ class AlbumsForm extends Vue {
       throw new Error('album or album slug is undefined')
     }
     formData.append('album_slug', this.album.slug as string)
-    xhr.setRequestHeader('Authorization', this.$auth.token.get())
+    xhr.setRequestHeader('Authorization', this.$auth.strategy.token.get())
   }
 
   async updateAlbum (): Promise<void> {
