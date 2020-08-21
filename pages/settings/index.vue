@@ -136,7 +136,7 @@ export default class Settings extends Vue {
 
     getDropzoneOptions (setting: Setting): DropzoneOptions {
       return {
-        url: `/api/admin/settings/${setting.id}`,
+        url: process.env.remoteApi + `/api/admin/settings/${setting.id}`,
         thumbnailWidth: 200,
         addRemoveLinks: true,
         parallelUploads: 5,
