@@ -141,8 +141,8 @@ export default class Settings extends Vue {
         addRemoveLinks: true,
         parallelUploads: 5,
         // Setup chunking
-        chunking: true,
-        method: 'POST',
+        chunking: false,
+        method: 'UPDATE',
         maxFilesize: 400000000,
         chunkSize: 1000000,
         retryChunks: true,
