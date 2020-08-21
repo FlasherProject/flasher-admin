@@ -160,8 +160,8 @@ export default class Settings extends Vue {
       }
     }
 
-    sendingEvent (_file: File, _xhr: XMLHttpRequest, formData: FormData): void {
-      formData.append('_method', 'patch')
+    sendingEvent (_file: File, xhr: XMLHttpRequest): void {
+      xhr.setRequestHeader('Authorization', this.$auth.strategy.token.get())
     }
 
     created (): void {
