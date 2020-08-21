@@ -138,30 +138,21 @@ export default class Settings extends Vue {
       return {
         url: process.env.remoteApi + `/api/admin/settings/${setting.id}`,
         thumbnailWidth: 200,
-        addRemoveLinks: true,
-        parallelUploads: 5,
         // Setup chunking
         chunking: false,
-        method: 'PATCH',
+        method: 'POST',
         maxFilesize: 400000000,
-        chunkSize: 1000000,
-        retryChunks: true,
-        retryChunksLimit: 5,
         maxThumbnailFilesize: 25,
         // If true, the individual chunks of a file are being uploaded simultaneously.
         // parallelChunkUploads: true,
         acceptedFiles: 'image/*',
         dictDefaultMessage: "<i class='fas fa-images'></i> Upload"
-        // headers: {
-        //   'X-CSRF-Token': (document.head.querySelector(
-        //     'meta[name="csrf-token"]'
-        //   ) as HTMLMetaElement).content
-        // }
       }
     }
 
-    sendingEvent (_file: File, xhr: XMLHttpRequest): void {
+    sendingEvent (_file: File, xhr: XMLHttpRequest, _formData: FormData): void {
       xhr.setRequestHeader('Authorization', this.$auth.strategy.token.get())
+      xhr.setRequestHeader('_method', 'PÄTCH')
     }
 
     created (): void {
