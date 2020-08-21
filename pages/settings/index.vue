@@ -142,7 +142,7 @@ export default class Settings extends Vue {
         parallelUploads: 5,
         // Setup chunking
         chunking: false,
-        method: 'UPDATE',
+        method: 'PATCH',
         maxFilesize: 400000000,
         chunkSize: 1000000,
         retryChunks: true,
