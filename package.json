@@ -33,6 +33,7 @@
     "nuxt": "^2.0.0",
     "nuxt-buefy": "^0.3.2",
     "nuxt-fontawesome": "^0.4.0",
+    "nuxt-rfg-icon": "^0.6.4",
     "sass-loader": "^8.0.2",
     "vue-property-decorator": "^8.4.0",
     "vue-quill-editor": "latest",

@@ -44,6 +44,7 @@ export default {
    ** Nuxt.js modules
    */
   modules: [
+    'nuxt-rfg-icon',
     // Doc: https://buefy.github.io/#/documentation
     'nuxt-buefy',
     // Doc: https://axios.nuxtjs.org/usage
@@ -145,6 +146,81 @@ export default {
        ** Runtime lint
        */
       eslint: false
+    }
+  },
+  pwa: {
+    icon: {
+      source: 'icon.png'
+    },
+    manifest: {
+      name: 'Administration JKanda',
+      short_name: 'Admin JKanda',
+      lang: 'fr'
+    }
+  },
+  'rfg-icon': {
+    static: true,
+    staticPath: '/icons',
+    masterPicture: 'static/icon.png',
+    rfg: {
+      iconsPath: '/icons',
+      design: {
+        ios: {
+          pictureAspect: 'backgroundAndMargin',
+          backgroundColor: '#ffffff',
+          margin: '14%',
+          assets: {
+            ios6AndPriorIcons: false,
+            ios7AndLaterIcons: false,
+            precomposedIcons: false,
+            declareOnlyDefaultIcon: true
+          }
+        },
+        desktopBrowser: {
+          design: 'raw'
+        },
+        windows: {
+          pictureAspect: 'noChange',
+          backgroundColor: '#000000',
+          onConflict: 'override',
+          assets: {
+            windows80Ie10Tile: false,
+            windows10Ie11EdgeTiles: {
+              small: false,
+              medium: true,
+              big: false,
+              rectangle: false
+            }
+          }
+        },
+        androidChrome: {
+          pictureAspect: 'shadow',
+          themeColor: '#ffffff',
+          manifest: {
+            name: 'JKanda',
+            display: 'standalone',
+            orientation: 'notSet',
+            onConflict: 'override',
+            declared: true
+          },
+          assets: {
+            legacyIcon: false,
+            lowResolutionIcons: false
+          }
+        },
+        safariPinnedTab: {
+          pictureAspect: 'silhouette',
+          themeColor: '#5bbad5'
+        }
+      },
+      settings: {
+        compression: 5,
+        scalingAlgorithm: 'Mitchell',
+        errorOnImageTooSmall: false,
+        readmeFile: false,
+        htmlCodeFile: false,
+        usePathAsIs: false
+      }
     }
   }
 }
