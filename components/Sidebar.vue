@@ -33,12 +33,12 @@
           icon="pen-fancy"
           tag="nuxt-link"
         />
-        <b-menu-item
-          :to="{ name: 'users' }"
-          label="Users"
-          icon="user"
-          tag="nuxt-link"
-        />
+        <!--        <b-menu-item-->
+        <!--          :to="{ name: 'users' }"-->
+        <!--          label="Users"-->
+        <!--          icon="user"-->
+        <!--          tag="nuxt-link"-->
+        <!--        />-->
         <b-menu-item
           :to="{ name: 'testimonials' }"
           label="Testimonials"
