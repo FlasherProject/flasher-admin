@@ -6,7 +6,7 @@
         <div class="hero-body">
           <div class="container">
             <h1 class="title is-1">
-              Hello, {{ username }}.
+              Hello, {{ $auth.user.preferred_username }}.
             </h1>
             <h2 class="subtitle">
               I hope you are having a great day!
@@ -96,7 +96,6 @@ class Dashboard extends Vue {
   albumsCount = 0
   contactsCount = 0
   albumMediasCount = 0
-  username: string | null = null
 
   created (): void {
     this.fetchDashboard()

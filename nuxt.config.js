@@ -90,6 +90,7 @@ export default {
     middleware: ['auth']
   },
   auth: {
+    plugins: ['~/plugins/axios.client.ts', '~/plugins/auth.client.ts'],
     redirect: {
       login: '/login',
       logout: '/login',
