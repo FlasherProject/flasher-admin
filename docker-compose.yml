@@ -1,7 +1,7 @@
 version: '3'
 services:
   frontend:
-    image: docker.pkg.github.com/FlasherProject/flasher-admin/node:${CI_COMMIT_SHORT_SHA:-latest}
+    image: registry.gitlab.com/flasher/flasher/flasher-admin:${CI_COMMIT_SHORT_SHA:-latest}
     build:
       context: .
       dockerfile: Dockerfile

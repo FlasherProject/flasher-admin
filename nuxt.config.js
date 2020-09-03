@@ -77,7 +77,7 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: process.env.REMOTE_API || 'http://localhost:8000',
+    baseURL: process.env.REMOTE_API,
     debug: false,
     credentials: false,
     retry: { retries: 1 },
@@ -85,9 +85,6 @@ export default {
     common: {
       Accept: 'application/json'
     }
-  },
-  proxy: {
-    '/api': 'http://localhost:8000'
   },
   router: {
     middleware: ['auth']
@@ -103,9 +100,9 @@ export default {
       keycloak: {
         scheme: 'oauth2',
         endpoints: {
-          authorization: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/auth`,
-          token: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/token`,
-          logout: `${process.env.KEYCLOAK_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/logout?redirect_uri=` + encodeURIComponent(String(process.env.REMOTE_API))
+          authorization: `${process.env.KEYCLOAK_REMOTE_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/auth`,
+          token: `${process.env.KEYCLOAK_REMOTE_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/token`,
+          logout: `${process.env.KEYCLOAK_REMOTE_HOST}/auth/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/logout?redirect_uri=` + encodeURIComponent(String(process.env.REMOTE_API))
         },
         token: {
           property: 'access_token',
@@ -121,9 +118,13 @@ export default {
         grantType: 'authorization_code',
         clientId: process.env.KEYCLOAK_CLIENT_ID,
         scope: ['openid', 'profile', 'email'],
-        codeChallengeMethod: 'S256'
+        codeChallengeMethod: 'S256',
+        logoutRedirectUri: '/'
       }
     }
+  },
+  env: {
+    remoteApi: process.env.REMOTE_API
   },
   dotenv: {
     /* module options */

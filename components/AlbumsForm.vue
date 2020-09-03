@@ -129,7 +129,6 @@
             </form>
           </b-tab-item>
           <b-tab-item v-if="!isCreating" label="Pictures" icon="images">
-            <album-media-uploader model-class="aze" model-id="1" endpoint="" collection="" />
             <vue-dropzone
               id="dropzone"
               ref="myVueDropzone"
@@ -218,8 +217,7 @@ interface AlbumErrorsInterface {
     vueDropzone: vue2Dropzone,
     quillEditor,
     ShareAlbum,
-    draggable,
-    AlbumMediaUploader
+    draggable
   }
 })
 class AlbumsForm extends Vue {
@@ -241,7 +239,7 @@ class AlbumsForm extends Vue {
   }
 
   dropzoneOptions: DropzoneOptions = {
-    url: process.env.REMOTE_API + '/api/admin/album-pictures',
+    url: process.env.remoteApi + '/api/admin/album-pictures',
     thumbnailWidth: 200,
     addRemoveLinks: true,
     parallelUploads: 5,
@@ -309,7 +307,7 @@ class AlbumsForm extends Vue {
       throw new Error('album or album slug is undefined')
     }
     formData.append('album_slug', this.album.slug as string)
-    xhr.setRequestHeader('Authorization', this.$auth.token.get())
+    xhr.setRequestHeader('Authorization', this.$auth.strategy.token.get())
   }
 
   async updateAlbum (): Promise<void> {
