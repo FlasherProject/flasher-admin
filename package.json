@@ -37,7 +37,7 @@
     "vue-property-decorator": "^8.4.0",
     "vue-quill-editor": "latest",
     "vue2-dropzone": "latest",
-    "vuedraggable": "latest"
+    "vuedraggable": "^2.24.1"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^3.0.0",

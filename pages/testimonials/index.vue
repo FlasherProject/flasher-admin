@@ -237,7 +237,6 @@ export default class TestimonialsIndex extends Vue {
     }
 
     toggleIsPublishedAndUpdate (testimonial: Testimonial): void {
-      // eslint-disable-next-line @typescript-eslint/camelcase
       testimonial.published_at = testimonial.published_at ? null : new Date()
       this.updateTestimonial(testimonial)
     }

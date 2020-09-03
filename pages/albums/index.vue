@@ -80,14 +80,15 @@
 
           <b-table-column field="status" label="Status" centered>
             <span
-              v-if="album.row.private === 1"
+              v-if="album.row.private && album.row.published_at !== null
+              "
               :title="'This album is private'"
               class="tag is-danger"
             >
               {{ 'Private' }}
             </span>
             <span
-              v-else-if="typeof album.row.published_at === 'string'"
+              v-else-if="album.row.published_at !== null"
               :title="new Date(album.row.published_at).toLocaleDateString()"
               class="tag is-success"
             >
