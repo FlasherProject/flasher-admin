@@ -199,7 +199,6 @@ import { showError, showSuccess } from '~/helpers/toast'
 import FilterableById from '~/models/interfaces/filterableById'
 import { debounce } from '~/helpers/debounce'
 import ShareAlbum from '~/components/ShareAlbum.vue'
-import AlbumMediaUploader from '~/components/AlbumMediaUploader.vue'
 
 interface AlbumErrorsInterface {
   title?: object
