@@ -108,7 +108,6 @@ class Dashboard extends Vue {
       .get('/api/admin/dashboard')
       .then(res => res.data)
       .then((res) => {
-        this.username = res.user
         this.cosplayersCount = res.cosplayersCount
         this.usersCount = res.usersCount
         this.albumsCount = res.albumsCount
