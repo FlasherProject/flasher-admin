@@ -126,7 +126,8 @@ export default {
     }
   },
   env: {
-    remoteApi: process.env.REMOTE_API
+    remoteApi: process.env.REMOTE_API,
+    remote: process.env.REMOTE
   },
   dotenv: {
     /* module options */

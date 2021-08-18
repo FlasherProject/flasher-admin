@@ -156,7 +156,7 @@
                     class="column is-two-thirds-tablet is-half-desktop is-one-third-widescreen"
                   >
                     <div class="box has-grab-cursor">
-                      <img :src="picture.thumb" :alt="picture.name">
+                      <img :src="generateNextImageURL(picture.url)" :alt="picture.name">
                       <a
                         class="button has-text-danger"
                         @click="deleteAlbumPicture(picture.id)"
@@ -198,6 +198,7 @@ import Cosplayer from '~/models/cosplayer'
 import { showError, showSuccess } from '~/helpers/toast'
 import FilterableById from '~/models/interfaces/filterableById'
 import { debounce } from '~/helpers/debounce'
+import { generateNextImageURL } from '~/helpers/image'
 import ShareAlbum from '~/components/ShareAlbum.vue'
 
 interface AlbumErrorsInterface {
@@ -271,6 +272,10 @@ class AlbumsForm extends Vue {
     } else {
       this.fetchAlbum()
     }
+  }
+
+  generateNextImageURL (url: string, quality = 75, width = 828): string {
+    return generateNextImageURL(url, quality, width)
   }
 
   updateOrCreateAlbum (): void {
