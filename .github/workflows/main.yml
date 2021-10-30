@@ -6,11 +6,16 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    env:
+      CI_COMMIT_REF_NAME: Mon
+      CI_COMMIT_SHORT_SHA: Mon
     steps:
       - name: Define env
         run: |
-          echo "::set-env name=CI_COMMIT_REF_NAME::$(echo -n $GITHUB_REF | cut -d/ -f3-)"
-          echo "::set-env name=CI_COMMIT_SHORT_SHA::$(echo -n $GITHUB_SHA | cut -c 1-7)"
+          echo "CI_COMMIT_REF_NAME=`echo ${GITHUB_REF} | cut -d/ -f3-`" >> $GITHUB_ENV
+          echo "CI_COMMIT_SHORT_SHA=`echo ${GITHUB_SHA} |  cut -c 1-7`" >> $GITHUB_ENV
+#          echo "::set-env name=CI_COMMIT_REF_NAME::$(echo -n $GITHUB_REF | cut -d/ -f3-)"
+#          echo "::set-env name=CI_COMMIT_SHORT_SHA::$(echo -n $GITHUB_SHA | cut -c 1-7)"
 
       - uses: actions/checkout@v2
 
