@@ -1,4 +1,4 @@
-FROM node:alpine as build-stage
+FROM node:12-alpine as build-stage
 WORKDIR /app
 COPY . .
 RUN apk add --no-cache python2 make g++
