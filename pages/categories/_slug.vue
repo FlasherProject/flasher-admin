@@ -108,7 +108,8 @@ export default class CategoriesEdit extends Vue {
 
     // TODO Limit 1 file
     dropzoneOptions: object = {
-      url: '/api/admin/cover-categories',
+      url: `${process.env.remoteApi}/api/admin/cover-categories`,
+      // url: '/api/admin/cover-categories',
       thumbnailWidth: 200,
       addRemoveLinks: true,
       parallelUploads: 5,
