@@ -109,27 +109,22 @@ export default class CategoriesEdit extends Vue {
     // TODO Limit 1 file
     dropzoneOptions: object = {
       url: `${process.env.remoteApi}/api/admin/cover-categories`,
-      // url: '/api/admin/cover-categories',
       thumbnailWidth: 200,
       addRemoveLinks: true,
       parallelUploads: 5,
       // Setup chunking
-      chunking: true,
+      chunking: false,
       method: 'POST',
-      maxFilesize: 400000000,
-      chunkSize: 1000000,
-      retryChunks: true,
-      retryChunksLimit: 5,
-      maxThumbnailFilesize: 25,
+      maxFilesize: 500000000,
+      // chunkSize: 5000000,
+      // autoProcessQueue: false,
+      // retryChunks: true,
+      retryChunksLimit: 15,
+      maxThumbnailFilesize: 30,
       // If true, the individual chunks of a file are being uploaded simultaneously.
-      // parallelChunkUploads: true,
+      parallelChunkUploads: false,
       acceptedFiles: 'image/*',
       dictDefaultMessage: "<i class='fas fa-images'></i> Upload"
-      // headers: {
-      //   'X-CSRF-Token': (document.head.querySelector(
-      //     'meta[name="csrf-token"]'
-      //   ) as HTMLMetaElement).content
-      // }
     };
 
     protected editorOption: object = {
@@ -201,11 +196,12 @@ export default class CategoriesEdit extends Vue {
         })
     }
 
-    sendingEvent (_file: File, _xhr: XMLHttpRequest, formData: FormData): void {
+    sendingEvent (_file: File, xhr: XMLHttpRequest, formData: FormData): void {
       if (!this.category.slug) {
         throw new DOMException('category slug is null')
       }
       formData.append('category_slug', this.category.slug as string)
+      xhr.setRequestHeader('Authorization', this.$auth.strategy.token.get())
     }
 
     refreshCover (): void {
