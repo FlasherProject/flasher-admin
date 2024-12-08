@@ -29,7 +29,7 @@
     "@uppy/dashboard": "^1.6.2",
     "@uppy/tus": "^1.5.5",
     "dropzone": "^5.7.1",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "nuxt": "^2.0.0",
     "nuxt-buefy": "^0.3.2",
     "nuxt-fontawesome": "^0.4.0",
